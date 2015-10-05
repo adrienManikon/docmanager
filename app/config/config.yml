@@ -79,6 +79,9 @@ swiftmailer:
     spool:     { type: memory }
 
 doctrine_phpcr:
+    odm:
+        auto_mapping: true
+        auto_generate_proxy_classes: "%kernel.debug%"
     session:
         backend:
             type: doctrinedbal
