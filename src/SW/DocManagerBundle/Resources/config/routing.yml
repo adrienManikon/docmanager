@@ -1,3 +1,11 @@
 sw_doc_manager_homepage:
     path:     /hello/{name}
     defaults: { _controller: SWDocManagerBundle:Default:index }
+    
+sw_doc_manager_add:
+    path:     /add
+    defaults: { _controller: SWDocManagerBundle:Add:index }
+
+sw_doc_manager_publish:
+    path:     /publish
+    defaults: { _controller: SWDocManagerBundle:Add:index }

@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5 oct. 2015, 13:36:35
+    Author     : adrien.manikon
+*/
+
+#header-document {
+    color: white;
+}
+
+#header-document h3 {
+    text-transform: uppercase;
+}
+
+.number {
+  border-radius: 50%;
+  text-align: center;
+  margin-top: -0.65rem;
+  background-color: white;
+  line-height: 2rem;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -1rem;
+  position: absolute;
+  top: 50%;
+}
+
+.number-blue {
+    border-color: #2086bf;
+    color: #2086bf;
+}
+
+.number-steel {
+    border-color: #647687;
+    background-color: white;
+    color: #647687;
+}
+
+.input-control.header-select select {
+    -webkit-appearance: menulist-button !important;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}DOCMANAGER{% endblock %}</title>
+        
+        {% stylesheets filter='cssrewrite'
+            'css/metro.css'
+            'css/metro-icons.css'
+            '@SWDocManagerBundle/Resources/public/css/main.css'%}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        
+        
+        
+        {% block body %}
+        {% endblock %}
+
+    </body>
+    
+
+    {% javascripts
+        'js/jquery.js'
+        'js/metro.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+</html>

@@ -1,0 +1,248 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "SWDocManagerBundle:Add:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="grid" id="header-document">
+        <div class="row cells3">
+            <div class="cell padding20 bg-cyan">
+                <div class="flex-grid">
+                    <div class="row cells2">
+                        <div class="cell colspan2"><span class="number number-blue">1</span></div><div class="cell colspan4"><h3>Kategorien</h3></div>                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cell padding20 bg-steel">
+                <div class="flex-grid">
+                    <div class="row cells2">
+                        <div class="cell colspan2"><span class="number number-steel">2</span></div><div class="cell colspan4"><h3>Dokument</h3></div>                    
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="cell padding20 bg-steel">
+                <div class="flex-grid">
+                    <div class="row cells2">
+                        <div class="cell colspan2"><span class="number number-steel">3</span></div><div class="cell colspan4"><h3>Veröffentlichen</h3></div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="category-block" class="grid">
+        
+        <div class="row cells6">
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="distribution" checked>
+                    <span class="check"></span>
+                    <span class="caption">Vertrieb</span>
+                </label>
+            </div>
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="production">
+                    <span class="check"></span>
+                    <span class="caption">Produktion</span>
+                </label>
+            </div>
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="assembly">
+                    <span class="check"></span>
+                    <span class="caption">Montage</span>
+                </label>
+            </div>
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="technology">
+                    <span class="check"></span>
+                    <span class="caption">Technik</span>
+                </label>
+            </div>
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="others">
+                    <span class="check"></span>
+                    <span class="caption">Übrige</span>
+                </label>
+            </div>
+            <div class="cell">
+                <label class="input-control radio">
+                    <input type="radio" name="category" value="luuxa">
+                    <span class="check"></span>
+                    <span class="caption">luuXa</span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="row cells3">
+            <div class="cell">
+                <div class="input-control header-select select full-size">
+                    <select>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                    </select>
+                </div>
+                <div class="input-control select multiple full-size" style="height: 100px">
+                    <select multiple>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="cell">
+                <div class="input-control header-select select full-size">
+                    <select>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                    </select>
+                </div>
+                <div class="input-control select multiple full-size" style="height: 100px">
+                    <select multiple>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="cell">
+                <div class="input-control header-select select full-size">
+                    <select>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                        <option>Bezeichnung</option>
+                    </select>
+                </div>
+                <div class="input-control select multiple full-size" style="height: 100px">
+                    <select multiple>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                        <option>Lorem Ipsum</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row cells12">
+            <div class="cell offset8 colspan4">
+                <button class="button primary full-size">weiter</button>
+            </div>
+        </div>               
+
+        <div class="row cells1">
+            <div class="cell">
+                <h3>Vorhandene Dokumente</h3>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="sortable-column sort-desc">Name</th>
+                    <th class="sortable-column sort-desc">Datum</th>
+                    <th class="sortable-column">Bezeichnung</th>
+                    <th class="sortable-column">Von</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>
+            <tr>
+                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>
+            <tr>
+                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>            
+        </table>
+        
+    </div>
+    
+    <div id="upload-block" class="grid">
+        
+        <ul class="breadcrumbs2">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Download</a></li>
+        <li><a href="#">Windows 10</a></li>
+        </ul>
+        
+        <div class="row cells5">
+            <div class="cell ">
+                <div class="input-control text full-size">
+                <input type="text" value="DEEC2A" disabled>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <input type="text" placeholder="Dateiname">
+                </div>                
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <input type="text" placeholder="Initialen">
+                </div>                
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <input type="text" value="18.02.2015" readonly>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control full-size">
+                <button class="button">Caption</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row cells12">
+            <div class="cell offset11 colspan1">
+                <button class="button cycle-button">+</button>
+            </div>
+        </div>
+        
+        <div class="row cells12">
+            <div class="cell offset8 colspan4">
+                <button class="button primary full-size">Veröffentlichen</button>
+            </div>
+        </div>                      
+        
+    </div>
+    
+</div>
+{% endblock %}
