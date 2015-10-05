@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new SW\DocManagerBundle\SWDocManagerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

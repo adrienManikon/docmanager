@@ -1,3 +1,7 @@
+sw_doc_manager:
+    resource: "@SWDocManagerBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
