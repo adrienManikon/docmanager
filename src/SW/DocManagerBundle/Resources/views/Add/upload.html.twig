@@ -32,7 +32,7 @@
 </div>
 
 <div id="upload-block" class="grid">
-    
+      
     <div class="row cells1">
         <div class="cell" id="categoriesline">
             <span class="categoryBlock padding10 bg-grayLighter">{{ category }}</span>
@@ -40,38 +40,43 @@
             <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory2 }}</span>
             <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory3 }}</span>
         </div>
-    </div>
+    </div>        
+           
 
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    
     <div id="inputBlock">
         <div class="row cells12" id="fileInput1">
             <div class="cell colspan2">
                 <div class="input-control text full-size">
-                <input type="text" value="DEEC2A" disabled>
+                {{ form_widget(form.code,  { 'attr':{'disabled':'disabled'} }) }}
                 </div>
             </div>
             <div class="cell colspan5">
                 <div class="input-control text full-size">
-                    <input type="text" placeholder="Dateiname">
+                    {{ form_widget(form.name, { 'attr':{'placeholder':'Dateiname'} }) }}
                 </div>                
             </div>
             <div class="cell colspan2">
                 <div class="input-control text full-size">
-                    <input type="text" placeholder="Initialen">
+                    {{ form_widget(form.initials, { 'attr':{'placeholder':'Initialen'} }) }}
                 </div>                
             </div>
             <div class="cell colspan2">
                 <div class="input-control text full-size">
-                    <input type="text" value="18.02.2015" readonly>
+                    {{ form_widget(form.date,{ 'attr':{'readonly':'readonly'} }) }}
                 </div>
             </div>
             <div class="cell colspan1">
-                <div class="input-control full-size">
-                <button class="button full-size bg-gray fg-white">Datei</button>
+                <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
+                    Datei
+                {{ form_widget(form.file,{ 'attr':{'class':'button full-size bg-gray fg-white'} }) }}
                 </div>
             </div>
         </div>
     </div>
-
+    
+    
     <div class="row cells12">
         <div class="cell offset11 colspan1">
             <button class="button cycle-button" onclick="addFileInput()">+</button>
@@ -83,7 +88,7 @@
             <span class="mif-info"></span> Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
         </div>
         <div class="cell offset2 colspan4">
-            <button class="button primary full-size">weiter</button>
+            {{ form_widget(form.weiter, { 'attr':{'class':'button primary full-size'} }) }}
         </div>
     </div>    
         
@@ -92,7 +97,8 @@
         <p>
             Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
         </p>
-</div>
+    </div>
+    {{ form_end(form) }}
 
 </div>
     

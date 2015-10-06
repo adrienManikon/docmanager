@@ -3,6 +3,7 @@
 namespace SW\DocManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Document
@@ -50,9 +51,8 @@ class Document
     private $initials;
 
     /**
-     * @var string
+     * @var UploadedFile
      *
-     * @ORM\Column(name="file", type="string", length=255)
      */
     private $file;
 
@@ -77,6 +77,13 @@ class Document
      * @ORM\Column(name="creator", type="string", length=255)
      */
     private $creator;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
 
 
     /**
@@ -188,11 +195,11 @@ class Document
     /**
      * Set file
      *
-     * @param string $file
+     * @param UploadedFile $file
      *
      * @return Document
      */
-    public function setFile($file)
+    public function setFile(UploadedFile $file)
     {
         $this->file = $file;
 
@@ -202,7 +209,7 @@ class Document
     /**
      * Get file
      *
-     * @return string
+     * @return UploadedFile
      */
     public function getFile()
     {
@@ -267,6 +274,27 @@ class Document
     public function getCreator()
     {
         return $this->creator;
+    }
+    
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->creator = $this->file->getClientOriginalName();
+        $this->file->move($this->getUploadRootDir(), $this->name);       
+        $this->alt = $this->name;
+    }
+
+    public function getUploadDir()
+    {
+        return 'uploads/document';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 }
 
