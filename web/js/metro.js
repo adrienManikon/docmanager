@@ -8109,7 +8109,7 @@ $.widget( "metro.validator" , {
 
     funcs: {
         required: function(val){
-            return val.trim() !== "";
+            return val !== null ? val.trim() !== "" : false;
         },
         minlength: function(val, len){
             if (len == undefined || isNaN(len) || len <= 0) {
@@ -8475,7 +8475,8 @@ $.widget( "metro.validator" , {
         if ( arguments.length > 2 && params.constructor !== Array  ) {
             params = $.makeArray( arguments ).slice( 1 );
         }
-        if ( params.constructor !== Array ) {
+        params = params !== null ? params : [];
+        if ( params !== null && params.constructor !== Array ) {
             params = [ params ];
         }
         $.each( params, function( i, n ) {
