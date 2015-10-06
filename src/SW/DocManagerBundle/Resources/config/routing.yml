@@ -17,3 +17,7 @@ sw_doc_manager_upload_recap:
 sw_doc_manager_publish:
     path:     /publish
     defaults: { _controller: SWDocManagerBundle:Add:index }
+    
+sw_doc_manager_newline:
+    path:     /newLine
+    defaults: { _controller: SWDocManagerBundle:Add:getNewInputDocument }
