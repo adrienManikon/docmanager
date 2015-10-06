@@ -32,53 +32,75 @@
 </div>
 
 <div id="upload-block" class="grid">
+    
+    <div class="row cells1">
+        <div class="cell" id="categoriesline">
+            <span class="categoryBlock padding10 bg-grayLighter">{{ category }}</span>
+            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory1 }}</span>
+            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory2 }}</span>
+            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory3 }}</span>
+        </div>
+    </div>
 
-    <ul class="breadcrumbs2">
-    <li><a href="#">Products</a></li>
-    <li><a href="#">Download</a></li>
-    <li><a href="#">Windows 10</a></li>
-    </ul>
-
-    <div class="row cells5">
-        <div class="cell ">
-            <div class="input-control text full-size">
-            <input type="text" value="DEEC2A" disabled>
+    <div id="inputBlock">
+        <div class="row cells12" id="fileInput1">
+            <div class="cell colspan2">
+                <div class="input-control text full-size">
+                <input type="text" value="DEEC2A" disabled>
+                </div>
             </div>
-        </div>
-        <div class="cell">
-            <div class="input-control text full-size">
-                <input type="text" placeholder="Dateiname">
-            </div>                
-        </div>
-        <div class="cell">
-            <div class="input-control text full-size">
-                <input type="text" placeholder="Initialen">
-            </div>                
-        </div>
-        <div class="cell">
-            <div class="input-control text full-size">
-                <input type="text" value="18.02.2015" readonly>
+            <div class="cell colspan5">
+                <div class="input-control text full-size">
+                    <input type="text" placeholder="Dateiname">
+                </div>                
             </div>
-        </div>
-        <div class="cell">
-            <div class="input-control full-size">
-            <button class="button">Caption</button>
+            <div class="cell colspan2">
+                <div class="input-control text full-size">
+                    <input type="text" placeholder="Initialen">
+                </div>                
+            </div>
+            <div class="cell colspan2">
+                <div class="input-control text full-size">
+                    <input type="text" value="18.02.2015" readonly>
+                </div>
+            </div>
+            <div class="cell colspan1">
+                <div class="input-control full-size">
+                <button class="button full-size bg-gray fg-white">Datei</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="row cells12">
         <div class="cell offset11 colspan1">
-            <button class="button cycle-button">+</button>
+            <button class="button cycle-button" onclick="addFileInput()">+</button>
         </div>
     </div>
 
     <div class="row cells12">
-        <div class="cell offset8 colspan4">
+        <div class="cell colspan6 text-small v-align-top">
+            <span class="mif-info"></span> Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
+        </div>
+        <div class="cell offset2 colspan4">
             <button class="button primary full-size">weiter</button>
         </div>
-    </div>                      
+    </div>    
+        
+    <div data-role="dialog" id="limitFileDialog" class="padding20 dialog info" data-close-button="true" data-type="info">
+        <h1>Maximum files</h1>
+        <p>
+            Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
+        </p>
+</div>
 
 </div>
     
+{% endblock %}
+
+{% block javascript %}{{ parent() }}
+    {% javascripts
+        '@SWDocManagerBundle/Resources/public/js/upload.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}
