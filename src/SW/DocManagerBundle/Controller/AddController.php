@@ -18,8 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class AddController extends Controller
 {
-    public function indexAction()
+    public function categoryListAction()
     {
-        return $this->render('SWDocManagerBundle:Add:index.html.twig');
+        return $this->render('SWDocManagerBundle:Add:categorylist.html.twig');
+    }
+    
+    public function uploadViewAction()
+    {
+        return $this->render('SWDocManagerBundle:Add:upload.html.twig');
+    }
+    
+    public function recapAction()
+    {
+        return $this->render('SWDocManagerBundle:Add:recap.html.twig');
     }
 }

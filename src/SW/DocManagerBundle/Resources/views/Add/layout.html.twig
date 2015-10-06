@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}DOCMANAGER{% endblock %}</title>
+        <title>{% block title %}DocManager{% endblock %}</title>
         
         {% stylesheets filter='cssrewrite'
             'css/metro.css'
@@ -13,10 +13,13 @@
     </head>
     <body>
         
+        <div class="container">
+            <h1>Docmanager</h1>
+                     
+            {% block body %}
+            {% endblock %}
         
-        
-        {% block body %}
-        {% endblock %}
+        </div>
 
     </body>
     
