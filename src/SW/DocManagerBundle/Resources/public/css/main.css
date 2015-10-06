@@ -16,6 +16,10 @@ and open the template in the editor.
     text-transform: uppercase;
 }
 
+#documents-list, #loading {
+    display: none;
+}
+
 .number {
   border-radius: 50%;
   text-align: center;

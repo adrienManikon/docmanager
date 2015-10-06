@@ -24,9 +24,11 @@
     </body>
     
 
-    {% javascripts
-        'js/jquery.js'
-        'js/metro.js' %}
-      <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% block javascript %}
+        {% javascripts
+            'js/jquery.js'
+            'js/metro.js' %}
+          <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
 </html>
