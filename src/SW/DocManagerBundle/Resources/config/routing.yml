@@ -5,19 +5,8 @@ sw_doc_manager_homepage:
 sw_doc_manager_add:
     path:     /add
     defaults: { _controller: SWDocManagerBundle:Add:categoryList }
-    
-sw_doc_manager_upload_view:
-    path:     /uploadview/{category}/{subcategory1}/{subcategory2}/{subcategory3}
-    defaults: { _controller: SWDocManagerBundle:Add:uploadView }
-    
-sw_doc_manager_upload_recap:
-    path:     /recap
-    defaults: { _controller: SWDocManagerBundle:Add:recap }
-
+       
 sw_doc_manager_publish:
     path:     /publish
     defaults: { _controller: SWDocManagerBundle:Add:index }
     
-sw_doc_manager_newline:
-    path:     /newLine
-    defaults: { _controller: SWDocManagerBundle:Add:getNewInputDocument }
