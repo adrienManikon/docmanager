@@ -20,6 +20,10 @@ class DocumentType extends AbstractType
                 'required'=> false,
                 'attr'=> array('disabled'=>'disabled')
             ))
+            ->add('path', 'text', array(
+                'required'=> false,
+                'attr'=> array('disabled'=>'disabled')
+            ))
             ->add('name', 'text', array(
                 'attr'=> array('placeholder'=>'Dateiname')
             ))

@@ -8,5 +8,5 @@ sw_doc_manager_add:
        
 sw_doc_manager_publish:
     path:     /publish
-    defaults: { _controller: SWDocManagerBundle:Add:index }
+    defaults: { _controller: SWDocManagerBundle:Add:publish }
     

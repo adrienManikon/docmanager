@@ -11,8 +11,11 @@ namespace SW\DocManagerBundle\Controller;
 use SW\DocManagerBundle\Entity\Document;
 use SW\DocManagerBundle\Entity\UploadSession;
 use SW\DocManagerBundle\Form\UploadSessionType;
+use SW\DocManagerBundle\Form\DocumentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use \Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 
 
@@ -38,7 +41,6 @@ class AddController extends Controller
         $this->request = $request;
         
         if ($this->isMethodPost()) {
-            
             $this->uploadSession = new UploadSession();
             
             $this->uploadSession->setCategory($request->request->get("category"));
@@ -68,8 +70,10 @@ class AddController extends Controller
         
         if ($form->handleRequest($request)->isValid()) {
             
-            $this->form = $form;            
-            return $this->recapAction();
+            $this->form = $form;
+            $this->uploadDocuments(true, $this->uploadSession->getDocuments());           
+            
+            return $this->recapAction($request);
             
         }
         
@@ -77,13 +81,60 @@ class AddController extends Controller
             'form' => $form->createView(),
         ));
     }
+            
+    public function recapAction(Request $request)
+    {        
+       
+        $form = $this->get('form.factory')->createBuilder('form', $this->uploadSession)
+            ->setAction($this->generateUrl('sw_doc_manager_publish'))
+            ->add('documents', 'collection', array(
+                'type' => new DocumentType(),
+                'allow_add' => true,
+                ))
+            ->add('category', 'text')
+            ->add('subcategory1', 'text')
+            ->add('subcategory2', 'text')
+            ->add('subcategory3', 'text')
+            ->add('Veröffentlichen', 'submit');
         
-    public function recapAction()
-    {
         return $this->render('SWDocManagerBundle:Add:recap.html.twig', array(
-            'form' => $this->form->createView(),
+            'form' => $form->getForm()->createView(),
         ));
     } 
+    
+    public function publishAction(Request $request)
+    {
+        $this->request = $request;
+        
+        if ($this->isMethodPost()) {
+            
+            $uploadSession = new UploadSession();
+            
+            $form = $this->get('form.factory')->createBuilder('form', $uploadSession)
+                ->setAction($this->generateUrl('sw_doc_manager_publish'))
+                ->add('documents', 'collection', array(
+                    'type' => new DocumentType(),
+                    'allow_add' => true,
+                    ))
+                ->add('category', 'text')
+                ->add('subcategory1', 'text')
+                ->add('subcategory2', 'text')
+                ->add('subcategory3', 'text')
+                ->add('Veröffentlichen', 'submit')
+                ->getForm();
+            
+            $form->handleRequest($request);
+            
+            if ($uploadSession != null) {
+                $this->uploadDocuments(false, $uploadSession->getDocuments());
+                var_dump($uploadSession->getDocuments());
+                //return $this->redirect($this->generateUrl('sw_doc_manager_add'));
+            }
+        
+            return new Response("OK");
+            
+        }
+    }
     
     /**
      * if request is method POST
@@ -92,5 +143,14 @@ class AddController extends Controller
      */
     public function isMethodPost() {
         return $this->request->isMethod("POST");
+    }
+    
+    public function uploadDocuments($temporary, ArrayCollection $documents) {
+        
+        foreach ($documents as $document) {
+            echo "1";
+            $document->upload($temporary);
+        }
+        
     }
 }

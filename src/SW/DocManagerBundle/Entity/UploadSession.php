@@ -56,6 +56,13 @@ class UploadSession
      * @ORM\Column(name="subcategory3", type="string")
      */
     private $subcategory3;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="bolean")
+     */
+    private $publish;
 
     public function __construct()
     {
@@ -128,6 +135,12 @@ class UploadSession
         $this->subcategory3 = $subcategory3;
     }
 
+    public function getPublish() {
+        return $this->publish;
+    }
 
+    public function setPublish($publish) {
+        $this->publish = $publish;
+    }
 }
 

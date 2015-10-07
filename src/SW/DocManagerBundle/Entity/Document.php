@@ -4,6 +4,7 @@ namespace SW\DocManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Document
@@ -28,6 +29,13 @@ class Document
      * @ORM\Column(name="code", type="string", length=255)
      */
     private $code;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255)
+     */
+    private $path;
 
     /**
      * @var string
@@ -216,6 +224,14 @@ class Document
         return $this->file;
     }
 
+    public function getPath() {
+        return $this->path;
+    }
+
+    public function setPath($path) {
+        $this->path = $path;
+    }
+
     /**
      * Set creator
      *
@@ -275,26 +291,56 @@ class Document
     {
         return $this->creator;
     }
-    
-    public function upload()
+       
+    public function upload($temporary)
     {
         if (null === $this->file) {
-            return;
+            //return;
+        }
+        
+        echo $temporary;
+        if ($temporary) {
+            
+            $this->creator = $this->file->getClientOriginalName();
+            $this->file = $this->file->move($this->getUploadTempDir(), $this->file->getFilename());
+            $this->name = $this->file->getFilename();
+            $this->alt = $this->name;
+            
+        } else {
+            
+            //$file = new UploadedFile($this->getUploadTempDir() . '/' . $this->name, $this->name);
+            $file = new File($this->getUploadTempDir() . '/' . $this->name);
+            $file->move($this->getUploadRootDir(), $this->name);
+            //$this->setFile($file);
+            //echo $this->path; die;
+            //var_dump($file->getSize()); die;
+            //$this->file = $this->file->move($this->getUploadRootDir(), $this->name);
+            //$this->creator = $file->getClientOriginalName();
+            //$this->alt = $this->name;
+            
         }
 
-        $this->creator = $this->file->getClientOriginalName();
-        $this->file->move($this->getUploadRootDir(), $this->name);       
-        $this->alt = $this->name;
+        $this->path = $this->file->getPath();
     }
 
     public function getUploadDir()
     {
         return 'uploads/document';
     }
+    
+    public function getUploadTempDir()
+    {
+        return 'uploads/temp';
+    }
 
     protected function getUploadRootDir()
     {
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+    
+    protected function getUploadRootTempDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadTempDir();
     }
 }
 
