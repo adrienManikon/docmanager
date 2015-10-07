@@ -23,6 +23,8 @@ use DateTime;
  */
 class AddController extends Controller
 {
+        
+    private $uploadSession;
     
     /**
      *
@@ -66,9 +68,8 @@ class AddController extends Controller
         
         if ($form->handleRequest($request)->isValid()) {
             
-            foreach ($uploadSession->getDocuments() as $file) {
-                $file->upload();
-            }
+            $this->uploadSession = $uploadSession;
+            return $this->recapAction();
             
         }
         
