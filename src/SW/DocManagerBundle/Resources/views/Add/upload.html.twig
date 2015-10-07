@@ -44,42 +44,43 @@
            
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-    
-    <div id="inputBlock">
-        <div class="row cells12" id="fileInput1">
-            <div class="cell colspan2">
-                <div class="input-control text full-size">
-                {{ form_widget(form.code,  { 'attr':{'disabled':'disabled'} }) }}
+        
+    <div id="inputBlock" data-prototype="{{ form_widget(form.documents.vars.prototype)|e }}">
+        {% for document in form.documents %}
+            <div class="row cells12 fileInput">
+                <div class="cell colspan2">
+                    <div class="input-control text full-size">
+                    {{ form_widget(document.code) }}
+                    </div>
+                </div>
+                <div class="cell colspan5">
+                    <div class="input-control text full-size">
+                        {{ form_widget(document.name) }}
+                    </div>                
+                </div>
+                <div class="cell colspan2">
+                    <div class="input-control text full-size">
+                        {{ form_widget(document.date) }}
+                    </div>
+                </div>                    
+                <div class="cell colspan2">
+                    <div class="input-control text full-size">
+                        {{ form_widget(document.initials) }}
+                    </div>                
+                </div>
+                <div class="cell colspan1">
+                    <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
+                        Datei
+                    {{ form_widget(document.file) }}
+                    </div>
                 </div>
             </div>
-            <div class="cell colspan5">
-                <div class="input-control text full-size">
-                    {{ form_widget(form.name, { 'attr':{'placeholder':'Dateiname'} }) }}
-                </div>                
-            </div>
-            <div class="cell colspan2">
-                <div class="input-control text full-size">
-                    {{ form_widget(form.initials, { 'attr':{'placeholder':'Initialen'} }) }}
-                </div>                
-            </div>
-            <div class="cell colspan2">
-                <div class="input-control text full-size">
-                    {{ form_widget(form.date,{ 'attr':{'readonly':'readonly'} }) }}
-                </div>
-            </div>
-            <div class="cell colspan1">
-                <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
-                    Datei
-                {{ form_widget(form.file,{ 'attr':{'class':'button full-size bg-gray fg-white'} }) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    
+        {% endfor %}
+    </div>    
     
     <div class="row cells12">
         <div class="cell offset11 colspan1">
-            <button class="button cycle-button" data-url="{{ path('sw_doc_manager_newline') }}" onclick="addFileInput(this)">+</button>
+            <button id="newInputButton" class="button cycle-button" data-url="{{ path('sw_doc_manager_newline') }}">+</button>
         </div>
     </div>
 

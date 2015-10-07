@@ -16,13 +16,22 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', 'text')
-            ->add('name', 'text')
-            ->add($builder->create('date', 'text')
+            ->add('code', 'text', array(
+                'attr'=> array('disabled'=>'disabled')
+            ))
+            ->add('name', 'text', array(
+                'attr'=> array('placeholder'=>'Dateiname')
+            ))
+            ->add($builder->create('date', 'text', array(
+                'attr'=> array('placeholder'=>'Initialen')
+            ))
                 ->addViewTransformer(new DateTimeToStringTransformer(null, null, 'd.m.Y')))                
-            ->add('initials', 'text')
-            ->add('file', 'file')
-            ->add('weiter', 'submit')
+            ->add('initials', 'text', array(
+                'attr'=> array('readonly'=>'readonly')
+            ))
+            ->add('file', 'file', array(
+                'attr' => array('class' => 'button full-size bg-gray fg-white')
+            ))
         ;
     }
     
@@ -35,7 +44,7 @@ class DocumentType extends AbstractType
             'data_class' => 'SW\DocManagerBundle\Entity\Document'
         ));
     }
-
+    
     /**
      * @return string
      */
