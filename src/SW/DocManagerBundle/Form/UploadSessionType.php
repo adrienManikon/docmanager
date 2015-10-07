@@ -19,6 +19,10 @@ class UploadSessionType extends AbstractType
                 'type' => new DocumentType(),
                 'allow_add' => true,
                 ))
+            ->add('category', 'text')
+            ->add('subcategory1', 'text')
+            ->add('subcategory2', 'text')
+            ->add('subcategory3', 'text')
             ->add('weiter', 'submit')
         ;
     }

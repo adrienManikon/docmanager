@@ -28,13 +28,41 @@ class UploadSession
      * @ORM\Column(name="documents", type="array")
      */
     private $documents;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string")
+     */
+    private $category;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="subcategory1", type="string")
+     */
+    private $subcategory1;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="subcategory2", type="string")
+     */
+    private $subcategory2;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="subcategory3", type="string")
+     */
+    private $subcategory3;
 
     public function __construct()
     {
         $this->documents = new ArrayCollection();
     }
 
-        /**
+      /**
      * Get id
      *
      * @return integer
@@ -67,5 +95,39 @@ class UploadSession
     {
         return $this->documents;
     }
+    
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function getSubcategory1() {
+        return $this->subcategory1;
+    }
+
+    public function getSubcategory2() {
+        return $this->subcategory2;
+    }
+
+    public function getSubcategory3() {
+        return $this->subcategory3;
+    }
+
+    public function setCategory($category) {
+        $this->category = $category;
+    }
+
+    public function setSubcategory1($subcategory1) {
+        $this->subcategory1 = $subcategory1;
+    }
+
+    public function setSubcategory2($subcategory2) {
+        $this->subcategory2 = $subcategory2;
+    }
+
+    public function setSubcategory3($subcategory3) {
+        $this->subcategory3 = $subcategory3;
+    }
+
+
 }
 

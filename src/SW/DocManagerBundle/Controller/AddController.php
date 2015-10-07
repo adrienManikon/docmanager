@@ -24,15 +24,9 @@ use DateTime;
 class AddController extends Controller
 {
         
-    private $uploadSession;
+    private $uploadSession;        
+    private $form;
     
-    private $category;
-    
-    private $subcategory1;
-    
-    private $subcategory2;
-    
-    private $subcategory3;
     /**
      *
      * @var Request 
@@ -45,10 +39,13 @@ class AddController extends Controller
         
         if ($this->isMethodPost()) {
             
-            $this->category = $request->request->get("category");
-            $this->subcategory1 = $request->request->get("select1");
-            $this->subcategory2 = $request->request->get("select2");
-            $this->subcategory3 = $request->request->get("select3");
+            $this->uploadSession = new UploadSession();
+            
+            $this->uploadSession->setCategory($request->request->get("category"));
+            $this->uploadSession->setSubcategory1($request->request->get("select1"));
+            $this->uploadSession->setSubcategory2($request->request->get("select2"));
+            $this->uploadSession->setSubcategory3($request->request->get("select3"));
+
             return $this->uploadViewAction($request);
             
         }
@@ -58,37 +55,34 @@ class AddController extends Controller
     
     public function uploadViewAction(Request $request)
     {       
-        
-        $uploadSession = new UploadSession();
+                
         $document = new Document();
         $document->setCode("DEEC2A");
         $document->setDate(new DateTime("2012-07-08"));
         /* TEST */
         $document->setName("test.pdf");
         $document->setInitials("AM");        
-        $uploadSession->getDocuments()->add($document);
+        $this->uploadSession->getDocuments()->add($document);
         
-        $form = $this->createForm(new UploadSessionType(), $uploadSession);
+        $form = $this->createForm(new UploadSessionType(), $this->uploadSession);
         
         if ($form->handleRequest($request)->isValid()) {
             
-            $this->uploadSession = $uploadSession;
+            $this->form = $form;            
             return $this->recapAction();
             
         }
         
         return $this->render('SWDocManagerBundle:Add:upload.html.twig', array(
-            'category' => $this->category,
-            'subcategory1' => "madera",
-            'subcategory2' => "Wämeschutz",
-            'subcategory3' => "technische",
             'form' => $form->createView(),
         ));
     }
         
     public function recapAction()
     {
-        return $this->render('SWDocManagerBundle:Add:recap.html.twig');
+        return $this->render('SWDocManagerBundle:Add:recap.html.twig', array(
+            'form' => $this->form->createView(),
+        ));
     } 
     
     /**

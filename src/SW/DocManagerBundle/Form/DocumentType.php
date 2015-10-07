@@ -17,6 +17,7 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('code', 'text', array(
+                'required'=> false,
                 'attr'=> array('disabled'=>'disabled')
             ))
             ->add('name', 'text', array(
@@ -27,6 +28,10 @@ class DocumentType extends AbstractType
             ))
                 ->addViewTransformer(new DateTimeToStringTransformer(null, null, 'd.m.Y')))                
             ->add('initials', 'text', array(
+                'required'=> false,
+                'attr'=> array('readonly'=>'readonly')
+            ))
+            ->add('creator', 'text', array(
                 'attr'=> array('readonly'=>'readonly')
             ))
             ->add('file', 'file', array(

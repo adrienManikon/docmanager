@@ -33,52 +33,38 @@
 
 <div id="upload-block" class="grid">
 
-    <ul class="breadcrumbs2">
-    <li><a href="#">Products</a></li>
-    <li><a href="#">Download</a></li>
-    <li><a href="#">Windows 10</a></li>
-    </ul>
+    {{ form_start(form) }}
+    
+        {{ include("SWDocManagerBundle:Add:categorylines.html.twig") }}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="sortable-column sort-desc">Name</th>
-                <th class="sortable-column sort-desc">Datum</th>
-                <th class="sortable-column">Bezeichnung</th>
-                <th class="sortable-column">Von</th>
-            </tr>
-        </thead>
-        <tr>
-            <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
-            <td>20.11.2015</td>
-            <td>DEEC2A</td>
-            <td>tbe</td>
-            <td><span class="mif-pencil"></span></td>
-            <td><span class="mif-search"></span></td>
-        </tr>
-        <tr>
-            <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-            <td>20.11.2015</td>
-            <td>DEEC2A</td>
-            <td>tbe</td>
-            <td><span class="mif-pencil"></span></td>
-            <td><span class="mif-search"></span></td>
-        </tr>
-        <tr>
-            <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-            <td>20.11.2015</td>
-            <td>DEEC2A</td>
-            <td>tbe</td>
-            <td><span class="mif-pencil"></span></td>
-            <td><span class="mif-search"></span></td>
-        </tr>            
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="sortable-column sort-desc">Name</th>
+                    <th class="sortable-column sort-desc">Datum</th>
+                    <th class="sortable-column">Bezeichnung</th>
+                    <th class="sortable-column">Von</th>
+                </tr>
+            </thead>
+            {% for document in form.documents %}
+                <tr>
+                    <td><span class="mif-file-pdf"></span>{{ form_widget(document.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                    <td>{{ form_widget(document.date, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                    <td>{{ form_widget(document.code, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                    <td>{{ form_widget(document.creator, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                    <td><span class="mif-pencil"></span></td>
+                    <td><span class="mif-search"></span></td>
+                </tr>
+            {% endfor %}         
+        </table>
 
-    <div class="row cells12">
-        <div class="cell offset8 colspan4">
-            <button class="button primary full-size">Veröffentlichen</button>
-        </div>
-    </div>                      
-
+        <div class="row cells12">
+            <div class="cell offset8 colspan4">
+                <button class="button primary full-size">Veröffentlichen</button>
+            </div>
+        </div>       
+        
+        <div class="hidden">{{ form_rest(form) }}</div>
+    {{ form_end(form) }}
 </div>    
 {% endblock %}

@@ -33,72 +33,64 @@
 
 <div id="upload-block" class="grid">
       
-    <div class="row cells1">
-        <div class="cell" id="categoriesline">
-            <span class="categoryBlock padding10 bg-grayLighter">{{ category }}</span>
-            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory1 }}</span>
-            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory2 }}</span>
-            <span class="categoryBlock padding10 bg-grayLighter">{{ subcategory3 }}</span>
-        </div>
-    </div>        
-           
-
-    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_start(form) }}
         
-    <div id="inputBlock" data-prototype="{{ form_widget(form.documents.vars.prototype)|e }}">
-        {% for document in form.documents %}
-            <div class="row cells12 fileInput">
-                <div class="cell colspan2">
-                    <div class="input-control text full-size">
-                    {{ form_widget(document.code) }}
+        {{ include("SWDocManagerBundle:Add:categorylines.html.twig") }}
+
+        <div id="inputBlock" data-prototype="{{ form_widget(form.documents.vars.prototype)|e }}">
+            {% for document in form.documents %}
+                <div class="row cells12 fileInput">
+                    <div class="cell colspan2">
+                        <div class="input-control text full-size">
+                        {{ form_widget(document.code) }}
+                        </div>
+                    </div>
+                    <div class="cell colspan5">
+                        <div class="input-control text full-size">
+                            {{ form_widget(document.name) }}
+                        </div>                
+                    </div>
+                    <div class="cell colspan2">
+                        <div class="input-control text full-size">
+                            {{ form_widget(document.date) }}
+                        </div>
+                    </div>                    
+                    <div class="cell colspan2">
+                        <div class="input-control text full-size">
+                            {{ form_widget(document.initials) }}
+                        </div>                
+                    </div>
+                    <div class="cell colspan1">
+                        <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
+                            Datei
+                        {{ form_widget(document.file) }}
+                        </div>
                     </div>
                 </div>
-                <div class="cell colspan5">
-                    <div class="input-control text full-size">
-                        {{ form_widget(document.name) }}
-                    </div>                
-                </div>
-                <div class="cell colspan2">
-                    <div class="input-control text full-size">
-                        {{ form_widget(document.date) }}
-                    </div>
-                </div>                    
-                <div class="cell colspan2">
-                    <div class="input-control text full-size">
-                        {{ form_widget(document.initials) }}
-                    </div>                
-                </div>
-                <div class="cell colspan1">
-                    <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
-                        Datei
-                    {{ form_widget(document.file) }}
-                    </div>
-                </div>
+            {% endfor %}
+        </div>    
+
+        <div class="row cells12">
+            <div class="cell offset11 colspan1">
+                <button id="newInputButton" class="button cycle-button">+</button>
             </div>
-        {% endfor %}
-    </div>    
-    
-    <div class="row cells12">
-        <div class="cell offset11 colspan1">
-            <button id="newInputButton" class="button cycle-button">+</button>
         </div>
-    </div>
 
-    <div class="row cells12">
-        <div class="cell colspan6 text-small v-align-top">
-            <span class="mif-info"></span> Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
+        <div class="row cells12">
+            <div class="cell colspan6 text-small v-align-top">
+                <span class="mif-info"></span> Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
+            </div>
+            <div class="cell offset2 colspan4">
+                {{ form_widget(form.weiter, { 'attr':{'class':'button primary full-size'} }) }}
+            </div>
+        </div>    
+
+        <div data-role="dialog" id="limitFileDialog" class="padding20 dialog info" data-close-button="true" data-type="info">
+            <h1>Maximum files</h1>
+            <p>
+                Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
+            </p>
         </div>
-        <div class="cell offset2 colspan4">
-            {{ form_widget(form.weiter, { 'attr':{'class':'button primary full-size'} }) }}
-        </div>
-    </div>    
-        
-    <div data-role="dialog" id="limitFileDialog" class="padding20 dialog info" data-close-button="true" data-type="info">
-        <h1>Maximum files</h1>
-        <p>
-            Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
-        </p>
-    </div>
     {{ form_end(form) }}
 
 </div>

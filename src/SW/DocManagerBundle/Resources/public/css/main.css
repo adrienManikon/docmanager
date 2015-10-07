@@ -85,3 +85,12 @@ table tr:nth-child(even) {
     top: -7%;
     left: -1%;
 }
+
+.noborder {
+    border: none;
+    background: inherit;
+}
+
+.hidden {
+    display: none;
+}
