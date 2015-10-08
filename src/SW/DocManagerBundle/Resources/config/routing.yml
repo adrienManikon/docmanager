@@ -3,8 +3,12 @@ sw_doc_manager_homepage:
     defaults: { _controller: SWDocManagerBundle:Default:index }
     
 sw_doc_manager_add:
-    path:     /add
-    defaults: { _controller: SWDocManagerBundle:Add:categoryList }
+    path:     /add/{status}
+    defaults: 
+        _controller: SWDocManagerBundle:Add:categoryList
+        status:
+    requirements:
+        status: (success|failed)?
        
 sw_doc_manager_publish:
     path:     /publish

@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }} - Index{% endblock %}
 
-{% block body %}
+{% block body %}  
 <div class="grid" id="header-document">
     <div class="row cells3">
         <div class="cell padding20 bg-cyan">
@@ -254,6 +254,22 @@
         </table>
     </div>
 </div>
+
+<div data-role="dialog" id="success" class="padding20 dialog success" data-close-button="true" data-type="success">
+    <h1>Uploading successfull</h1>
+    <p>
+        Your files have been uploaded.
+    </p>
+</div>
+
+<div data-role="dialog" id="alert" class="padding20 dialog alert" data-close-button="true" data-type="alert">
+    <h1>Error</h1>
+    <p>
+        Error during upload.
+    </p>
+</div>
+
+<span id="status" class="hidden">{{ status }}</span>
         
 {% endblock %}
 

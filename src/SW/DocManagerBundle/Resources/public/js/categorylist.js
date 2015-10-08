@@ -38,4 +38,12 @@ $(function(){
         
     });
     
+    var status = $('#status').html();
+    
+    if (status === 'success') {
+        showDialog("#success");
+    } else if (status === 'failed'){
+        showDialog("#alert");
+    }
+    
 });

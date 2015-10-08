@@ -36,7 +36,7 @@ class AddController extends Controller
      */
     private $request;
     
-    public function categoryListAction(Request $request)
+    public function categoryListAction($status = null, Request $request)
     {        
         $this->request = $request;
         
@@ -52,7 +52,7 @@ class AddController extends Controller
             
         }
         
-        return $this->render('SWDocManagerBundle:Add:categorylist.html.twig');
+        return $this->render('SWDocManagerBundle:Add:categorylist.html.twig', array('status' => $status));
     }
     
     public function uploadViewAction(Request $request)
@@ -127,11 +127,12 @@ class AddController extends Controller
             
             if ($uploadSession != null) {
                 $this->uploadDocuments(false, $uploadSession->getDocuments());
-                //return $this->redirect($this->generateUrl('sw_doc_manager_add'));
+                $parameter = array('status' => 'success');
+            } else {      
+                $parameter = array('status' => 'failed');
             }
-        
-            return new Response("OK");
             
+            return $this->redirect($this->generateUrl('sw_doc_manager_add', $parameter));            
         }
     }
     
