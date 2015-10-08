@@ -294,33 +294,27 @@ class Document
        
     public function upload($temporary)
     {
-        if (null === $this->file) {
-            //return;
-        }
-        
-        echo $temporary;
         if ($temporary) {
             
+            if (null === $this->file) {
+                return;
+            }
             $this->creator = $this->file->getClientOriginalName();
             $this->file = $this->file->move($this->getUploadTempDir(), $this->file->getFilename());
-            $this->name = $this->file->getFilename();
+            $this->path = $this->file->getFilename();
             $this->alt = $this->name;
             
         } else {
             
-            //$file = new UploadedFile($this->getUploadTempDir() . '/' . $this->name, $this->name);
-            $file = new File($this->getUploadTempDir() . '/' . $this->name);
+            $file = new File($this->getUploadTempDir() . '/' . $this->path);
+            
+            if (null === $file)
+                return;
+            
             $file->move($this->getUploadRootDir(), $this->name);
-            //$this->setFile($file);
-            //echo $this->path; die;
-            //var_dump($file->getSize()); die;
-            //$this->file = $this->file->move($this->getUploadRootDir(), $this->name);
-            //$this->creator = $file->getClientOriginalName();
-            //$this->alt = $this->name;
             
         }
 
-        $this->path = $this->file->getPath();
     }
 
     public function getUploadDir()

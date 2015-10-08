@@ -17,12 +17,10 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('code', 'text', array(
-                'required'=> false,
-                'attr'=> array('disabled'=>'disabled')
+                'required'=> false
             ))
-            ->add('path', 'text', array(
-                'required'=> false,
-                'attr'=> array('disabled'=>'disabled')
+            ->add('path', 'hidden', array(
+                'required'=> false
             ))
             ->add('name', 'text', array(
                 'attr'=> array('placeholder'=>'Dateiname')

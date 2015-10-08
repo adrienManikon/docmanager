@@ -127,7 +127,6 @@ class AddController extends Controller
             
             if ($uploadSession != null) {
                 $this->uploadDocuments(false, $uploadSession->getDocuments());
-                var_dump($uploadSession->getDocuments());
                 //return $this->redirect($this->generateUrl('sw_doc_manager_add'));
             }
         
@@ -148,7 +147,6 @@ class AddController extends Controller
     public function uploadDocuments($temporary, ArrayCollection $documents) {
         
         foreach ($documents as $document) {
-            echo "1";
             $document->upload($temporary);
         }
         
