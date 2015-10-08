@@ -56,15 +56,13 @@ function addTagForm($collectionHolder) {
             if(contains(name, 'date')) {
                 $('input', $block).val("18.02.2015");
             }
-        }
-        
-        if (contains(name, 'name')) {
+        } else if (contains(name, 'name')) {
             $block = $('<div class="cell colspan5"></div>').append($block);
-        }
-        
-        if (contains(name, 'file')) {
+        } else if (contains(name, 'file')) {
             $block = $('<div class="input-control full-size input-file-custom button full-size bg-gray fg-white">Datei</div>').append(element);
             $block = $('<div class="cell colspan1"></div>').append($block);
+        } else {
+            return true;
         }
         
         newBlock.append($block);
