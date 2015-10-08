@@ -5,6 +5,7 @@ namespace SW\DocManagerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Document
@@ -64,27 +65,28 @@ class Document
      */
     private $file;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="subCategories", type="array")
-     */
+  /**
+   * @ORM\ManyToMany(targetEntity="SW\DocManagerBundle\Entity\Category", cascade={"persist"})
+   */
     private $subCategories;
     
-        /**
-     * @var string
-     *
-     * @ORM\Column(name="category", type="string")
-     */
+    /**
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category")
+    * @ORM\JoinColumn(nullable=false)
+    */
     private $category;
-
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="creator", type="string", length=255)
-     */
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\User")
+    * @ORM\JoinColumn(nullable=false)
+    */
     private $creator;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $format;
     
         /**
      * @var string
@@ -92,8 +94,15 @@ class Document
      * @ORM\Column(name="alt", type="string", length=255)
      */
     private $alt;
+    
+    public function __construct() {
+        
+        $this->date = new \DateTime();
+        $this->subCategories = new ArrayCollection();
+        
+    }
 
-
+    
     /**
      * Get id
      *
@@ -235,7 +244,7 @@ class Document
     /**
      * Set creator
      *
-     * @param string $creator
+     * @param SW\DocManagerBundle\Entity\User $creator
      *
      * @return Document
      */
@@ -256,7 +265,7 @@ class Document
     }
 
     /**
-     * Get category
+     * Get SW\DocManagerBundle\Entity\Category
      * 
      * @return string
      */
@@ -276,23 +285,33 @@ class Document
     /**
      * Set category
      * 
-     * @param string $category
+     * @param SW\DocManagerBundle\Entity\Category $category
      */
     public function setCategory($category) {
         $this->category = $category;
+        return $this;
     }
     
     /**
      * Get creator
      *
-     * @return string
+     * @return SW\DocManagerBundle\Entity\User
      */
     public function getCreator()
     {
         return $this->creator;
     }
-       
-    public function upload($temporary)
+        
+    public function getFormat() {
+        return $this->format;
+    }
+
+    public function setFormat($format) {
+        $this->format = $format;
+        return $this;
+    }
+
+        public function upload($temporary)
     {
         if ($temporary) {
             
