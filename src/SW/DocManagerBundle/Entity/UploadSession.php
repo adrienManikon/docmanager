@@ -2,65 +2,51 @@
 
 namespace SW\DocManagerBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * UploadSession
  *
- * @ORM\Table()
- * @ORM\Entity
  */
 class UploadSession
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="documents", type="array")
      */
     private $documents;
     
      /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string")
      */
     private $category;
     
      /**
      * @var string
-     *
-     * @ORM\Column(name="subcategory1", type="string")
      */
     private $subcategory1;
     
      /**
      * @var string
      *
-     * @ORM\Column(name="subcategory2", type="string")
      */
     private $subcategory2;
     
      /**
      * @var string
      *
-     * @ORM\Column(name="subcategory3", type="string")
      */
     private $subcategory3;
     
     /**
      * @var boolean
      *
-     * @ORM\Column(name="publish", type="bolean")
      */
     private $publish;
 
