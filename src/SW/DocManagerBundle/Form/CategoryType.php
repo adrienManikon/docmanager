@@ -1,13 +1,24 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 namespace SW\DocManagerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UploadSessionType extends AbstractType
-{
+/**
+ * Description of CategoryType
+ *
+ * @author adrien.manikon
+ */
+class CategoryType extends AbstractType
+{    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -15,15 +26,8 @@ class UploadSessionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('documents', 'collection', array(
-                'type' => new DocumentType(),
-                'allow_add' => true,
-                ))
-            ->add('category', new CategoryType())
-            ->add('subcategory1', new CategoryType())
-            ->add('subcategory2', new CategoryType())
-            ->add('subcategory3', new CategoryType())
-            ->add('weiter', 'submit')
+            ->add('name', 'text')
+            ->add('code', 'text')
         ;
     }
     
@@ -33,7 +37,7 @@ class UploadSessionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SW\DocManagerBundle\Entity\UploadSession'
+            'data_class' => 'SW\DocManagerBundle\Entity\Category'
         ));
     }
 
@@ -42,6 +46,7 @@ class UploadSessionType extends AbstractType
      */
     public function getName()
     {
-        return 'sw_docmanagerbundle_uploadsession';
+        return 'sw_docmanagerbundle_category';
     }
+
 }

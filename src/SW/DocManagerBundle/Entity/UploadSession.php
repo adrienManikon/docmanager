@@ -22,24 +22,24 @@ class UploadSession
     private $documents;
     
      /**
-     * @var string
+     * @var Category
      *
      */
     private $category;
     
      /**
-     * @var string
+     * @var Category
      */
     private $subcategory1;
     
      /**
-     * @var string
+     * @var Category
      *
      */
     private $subcategory2;
     
      /**
-     * @var string
+     * @var Category
      *
      */
     private $subcategory3;
@@ -128,5 +128,24 @@ class UploadSession
     public function setPublish($publish) {
         $this->publish = $publish;
     }
+    
+    public function getCode() {
+        $code = '';
+        
+        if ($this->category != null) {
+            $code .= $this->category->getCode();
+        }
+        if ($this->subcategory1 != null) {
+            $code .= $this->subcategory1->getCode();
+        }
+        if ($this->subcategory2 != null) {
+            $code .= $this->subcategory2->getCode();
+        }
+        if ($this->subcategory3 != null) {
+            $code .= $this->subcategory3->getCode();
+        }     
+        
+        return $code;
+    }    
 }
 

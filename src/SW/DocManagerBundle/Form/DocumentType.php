@@ -33,7 +33,7 @@ class DocumentType extends AbstractType
                 'required'=> false,
                 'attr'=> array('readonly'=>'readonly')
             ))
-            ->add('creator', 'text', array(
+            ->add('creator', new UserType(), array(
                 'attr'=> array('readonly'=>'readonly')
             ))
             ->add('file', 'file', array(

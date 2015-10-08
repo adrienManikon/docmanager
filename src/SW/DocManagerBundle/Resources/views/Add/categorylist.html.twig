@@ -35,168 +35,40 @@
 
     <form method="POST" data-role="validator" data-show-required-state="false" data-hint-mode="hint" data-hint-easing="easeOutBounce" data-hide-error="5000" novalidate="novalidate">
         <div class="row cells6">
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="distribution" checked>
-                    <span class="check"></span>
-                    <span class="caption">Vertrieb</span>
-                </label>
-            </div>
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="production">
-                    <span class="check"></span>
-                    <span class="caption">Produktion</span>
-                </label>
-            </div>
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="assembly">
-                    <span class="check"></span>
-                    <span class="caption">Montage</span>
-                </label>
-            </div>
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="technology">
-                    <span class="check"></span>
-                    <span class="caption">Technik</span>
-                </label>
-            </div>
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="others">
-                    <span class="check"></span>
-                    <span class="caption">Übrige</span>
-                </label>
-            </div>
-            <div class="cell">
-                <label class="input-control radio">
-                    <input type="radio" name="category" value="luuxa">
-                    <span class="check"></span>
-                    <span class="caption">luuXa</span>
-                </label>
-            </div>
+            {% for maincategory in maincategories %}
+                <div class="cell">                                
+                    <label class="input-control radio">
+                        <input type="radio" name="category" value="{{ maincategory.id }}" checked>
+                        <span class="check"></span>
+                        <span class="caption">{{ maincategory.name }}</span>
+                    </label>
+                </div>                
+            {% endfor %}                        
         </div>
 
         <div class="row cells3">
-            <div class="cell">
-                <div class="select-tools">
-                    <div class="input-control header-select select full-size">
-                        <select>
-                            <option value="Bezeichnung1">Bezeichnung 1</option>
-                            <option value="Bezeichnung2">Bezeichnung 2</option>
-                            <option value="Bezeichnung3">Bezeichnung 3</option>
-                        </select>
-                    </div>
-                    <div class="input-control rows-select select multiple full-size" style="height: 100px">
-                        <select name="select1" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
-                            <option class="Bezeichnung1" value="1">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="2">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="3">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="4">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="5">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="6">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="7">Lorem Ipsum 1</option>
-
-                            <option class="Bezeichnung2" value="1">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="2">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="3">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="4">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="5">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="6">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="7">Lorem Ipsum 2</option>
-
-                            <option class="Bezeichnung3" value="1">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="2">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="3">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="4">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="5">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="6">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="7">Lorem Ipsum 3</option>
-                        </select>
-                        <span class="input-state-error mif-warming"></span>
+            
+            {% for i in 1..3 %}
+                <div class="cell">
+                    <div class="select-tools">
+                        <div class="input-control header-select select full-size">
+                            <select>
+                                {% for subcategory in subcategories %}
+                                    <option value="{{ subcategory.name }}">{{ subcategory.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-control rows-select select multiple full-size" style="height: 100px">
+                            <select name="{{ 'select' ~ i }}" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
+                                {% for subsubcategory in subsubcategories %}
+                                    <option class="{{ subsubcategory.parent.name }}" value="{{ subsubcategory.id }}">{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="input-state-error mif-warming"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="cell">
-                <div class="select-tools">
-                    <div class="input-control header-select select full-size">
-                        <select>
-                            <option value="Bezeichnung1">Bezeichnung 1</option>
-                            <option value="Bezeichnung2">Bezeichnung 2</option>
-                            <option value="Bezeichnung3">Bezeichnung 3</option>
-                        </select>
-                    </div>
-                    <div class="input-control rows-select select multiple full-size" style="height: 100px">
-                        <select name="select2" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
-                            <option class="Bezeichnung1" value="1">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="2">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="3">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="4">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="5">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="6">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="7">Lorem Ipsum 1</option>
-
-                            <option class="Bezeichnung2" value="1">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="2">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="3">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="4">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="5">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="6">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="7">Lorem Ipsum 2</option>
-
-                            <option class="Bezeichnung3" value="1">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="2">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="3">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="4">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="5">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="6">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="7">Lorem Ipsum 3</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cell">
-                <div class="select-tools">
-                    <div class="input-control header-select select full-size">
-                        <select>
-                            <option value="Bezeichnung1">Bezeichnung 1</option>
-                            <option value="Bezeichnung2">Bezeichnung 2</option>
-                            <option value="Bezeichnung3">Bezeichnung 3</option>
-                        </select>
-                    </div>
-                    <div class="input-control rows-select select multiple full-size" style="height: 100px">
-                        <select name="select3" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
-                            <option class="Bezeichnung1" value="1">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="2">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="3">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="4">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="5">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="6">Lorem Ipsum 1</option>
-                            <option class="Bezeichnung1" value="7">Lorem Ipsum 1</option>
-
-                            <option class="Bezeichnung2" value="1">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="2">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="3">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="4">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="5">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="6">Lorem Ipsum 2</option>
-                            <option class="Bezeichnung2" value="7">Lorem Ipsum 2</option>
-
-                            <option class="Bezeichnung3" value="1">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="2">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="3">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="4">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="5">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="6">Lorem Ipsum 3</option>
-                            <option class="Bezeichnung3" value="7">Lorem Ipsum 3</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="row cells12">

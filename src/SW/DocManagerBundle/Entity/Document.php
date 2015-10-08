@@ -318,7 +318,7 @@ class Document
             if (null === $this->file) {
                 return;
             }
-            $this->creator = $this->file->getClientOriginalName();
+            //$this->creator = $this->file->getClientOriginalName();
             $this->file = $this->file->move($this->getUploadTempDir(), $this->file->getFilename());
             $this->path = $this->file->getFilename();
             $this->alt = $this->name;

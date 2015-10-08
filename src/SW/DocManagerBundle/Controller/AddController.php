@@ -39,23 +39,35 @@ class AddController extends Controller
     {        
         $this->request = $request;
         
-        if ($this->isMethodPost()) {
-            $this->uploadSession = new UploadSession();
-            
-            $this->uploadSession->setCategory($request->request->get("category"));
-            $this->uploadSession->setSubcategory1($request->request->get("select1"));
-            $this->uploadSession->setSubcategory2($request->request->get("select2"));
-            $this->uploadSession->setSubcategory3($request->request->get("select3"));
-
-            return $this->uploadViewAction($request);
-            
-        }
-        
         $repository = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository('SWDocManagerBundle:Category');
         
+        if ($this->isMethodPost()) {
+            $this->uploadSession = new UploadSession();
+            
+            if ($request->request->get("category") != null 
+                    && $request->request->get("select1") != null
+                    && $request->request->get("select2") != null
+                    && $request->request->get("select3") != null)
+            {
+                $category = $repository->find($request->request->get("category"));
+                $subcategory1 = $repository->find($request->request->get("select1"));
+                $subcategory2 = $repository->find($request->request->get("select2"));
+                $subcategory3 = $repository->find($request->request->get("select3"));
+
+
+                $this->uploadSession->setCategory($category);
+                $this->uploadSession->setSubcategory1($subcategory1);
+                $this->uploadSession->setSubcategory2($subcategory2);
+                $this->uploadSession->setSubcategory3($subcategory3);
+            }
+            
+            return $this->uploadViewAction($request);
+            
+        }
+       
         $mainCategories = $repository->findByMain(true);
         $subsubcategories = $repository->getSubSubCategories();
         $subCategories = $repository->findBy(array(
@@ -89,11 +101,20 @@ class AddController extends Controller
     {       
                 
         $document = new Document();
-        $document->setCode("DEEC2A");
+        $document->setCode($this->uploadSession->getCode());
         $document->setDate(new DateTime("2012-07-08"));
+        
         /* TEST */
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('SWDocManagerBundle:User');
+        
+        $user = $repository->findByLastname('Manikon')[0];
+        
         $document->setName("test.pdf");
-        $document->setInitials("AM");        
+        $document->setInitials($user->getInitial());
+        $document->setCreator($user);
         $this->uploadSession->getDocuments()->add($document);
         
         $form = $this->createForm(new UploadSessionType(), $this->uploadSession);
