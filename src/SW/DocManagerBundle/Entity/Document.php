@@ -71,19 +71,19 @@ class Document
     private $subCategories;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category")
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category", cascade={"persist"})
     * @ORM\JoinColumn(nullable=false)
     */
     private $category;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\User")
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\User", cascade={"persist"})
     * @ORM\JoinColumn(nullable=false)
     */
     private $creator;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format")
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format", cascade={"persist"})
     * @ORM\JoinColumn(nullable=true)
     */
     private $format;
@@ -91,7 +91,7 @@ class Document
         /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * @ORM\Column(name="alt", type="string", length=255, nullable=true)
      */
     private $alt;
     
@@ -311,7 +311,7 @@ class Document
         return $this;
     }
 
-        public function upload($temporary)
+    public function upload($temporary)
     {
         if ($temporary) {
             
@@ -321,7 +321,7 @@ class Document
             //$this->creator = $this->file->getClientOriginalName();
             $this->file = $this->file->move($this->getUploadTempDir(), $this->file->getFilename());
             $this->path = $this->file->getFilename();
-            $this->alt = $this->name;
+            $this->alt = $this->code;
             
         } else {
             
@@ -333,6 +333,8 @@ class Document
             $file->move($this->getUploadRootDir(), $this->name);
             
         }
+        
+        return $this;
 
     }
 

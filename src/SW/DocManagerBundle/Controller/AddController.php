@@ -9,6 +9,7 @@
 namespace SW\DocManagerBundle\Controller;
 
 use SW\DocManagerBundle\Entity\Document;
+use SW\DocManagerBundle\Form\CategoryType;
 use SW\DocManagerBundle\Entity\UploadSession;
 use SW\DocManagerBundle\Form\UploadSessionType;
 use SW\DocManagerBundle\Form\DocumentType;
@@ -115,6 +116,7 @@ class AddController extends Controller
         $document->setName("test.pdf");
         $document->setInitials($user->getInitial());
         $document->setCreator($user);
+        
         $this->uploadSession->getDocuments()->add($document);
         
         $form = $this->createForm(new UploadSessionType(), $this->uploadSession);
@@ -122,7 +124,7 @@ class AddController extends Controller
         if ($form->handleRequest($request)->isValid()) {
             
             $this->form = $form;
-            $this->uploadDocuments(true, $this->uploadSession->getDocuments());           
+            $this->uploadDocuments(true, $this->uploadSession);           
             
             return $this->recapAction($request);
             
@@ -142,10 +144,10 @@ class AddController extends Controller
                 'type' => new DocumentType(),
                 'allow_add' => true,
                 ))
-            ->add('category', 'text')
-            ->add('subcategory1', 'text')
-            ->add('subcategory2', 'text')
-            ->add('subcategory3', 'text')
+            ->add('category', new CategoryType())
+            ->add('subcategory1', new CategoryType())
+            ->add('subcategory2', new CategoryType())
+            ->add('subcategory3', new CategoryType())
             ->add('Veröffentlichen', 'submit');
         
         return $this->render('SWDocManagerBundle:Add:recap.html.twig', array(
@@ -167,17 +169,17 @@ class AddController extends Controller
                     'type' => new DocumentType(),
                     'allow_add' => true,
                     ))
-                ->add('category', 'text')
-                ->add('subcategory1', 'text')
-                ->add('subcategory2', 'text')
-                ->add('subcategory3', 'text')
+                ->add('category', new CategoryType())
+                ->add('subcategory1', new CategoryType())
+                ->add('subcategory2', new CategoryType())
+                ->add('subcategory3', new CategoryType())
                 ->add('Veröffentlichen', 'submit')
                 ->getForm();
             
             $form->handleRequest($request);
             
             if ($uploadSession != null) {
-                $this->uploadDocuments(false, $uploadSession->getDocuments());
+                $this->uploadDocuments(false, $uploadSession);                                
                 $parameter = array('status' => 'success');
             } else {      
                 $parameter = array('status' => 'failed');
@@ -196,11 +198,25 @@ class AddController extends Controller
         return $this->request->isMethod("POST");
     }
     
-    public function uploadDocuments($temporary, ArrayCollection $documents) {
+    public function uploadDocuments($temporary, UploadSession $uploadSession) {
         
-        foreach ($documents as $document) {
-            $document->upload($temporary);
+        if (!$temporary)
+            $em = $this->getDoctrine()->getManager();
+        
+        foreach ($uploadSession->getDocuments() as $document) {
+            
+            $document->setCategory($uploadSession->getCategory());
+            $document->getSubCategories()->add($uploadSession->getSubcategory1());
+            $document->getSubCategories()->add($uploadSession->getSubcategory2());
+            $document->getSubCategories()->add($uploadSession->getSubcategory3());
+            $document->setCode($uploadSession->getCode());
+            
+            $document->upload($temporary); 
+            if (!$temporary)
+                $em->persist($document);
         }
+        if (!$temporary)
+            $em->flush();
         
     }
 }

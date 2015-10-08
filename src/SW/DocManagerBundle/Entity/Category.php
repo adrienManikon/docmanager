@@ -44,7 +44,7 @@ class Category
     /**
      * @var boolean
      *
-     * @ORM\Column(name="main", type="boolean", options={"default": false}))
+     * @ORM\Column(name="main", type="boolean", options={"default": false}), nullable=true)
      */
     private $main;
 
