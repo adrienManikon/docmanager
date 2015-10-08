@@ -40,7 +40,13 @@ class Category
     * @ORM\JoinColumn(nullable=true)
     */
     private $parent;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="main", type="boolean", options={"default": false}))
+     */
+    private $main;
 
     /**
      * Get id
@@ -122,5 +128,29 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set main
+     *
+     * @param boolean $main
+     *
+     * @return Category
+     */
+    public function setMain($main)
+    {
+        $this->main = $main;
+
+        return $this;
+    }
+
+    /**
+     * Get main
+     *
+     * @return boolean
+     */
+    public function getMain()
+    {
+        return $this->main;
     }
 }

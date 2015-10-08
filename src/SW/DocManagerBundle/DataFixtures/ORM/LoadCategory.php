@@ -19,27 +19,27 @@ class LoadCategory implements FixtureInterface
     $categories = array(
         array(
             'code' => 'A',
-            'name' => 'Vertrieb',            
+            'name' => 'Vertrieb',
         ),
         array(
             'code' => 'B',
-            'name' => 'Produktion',            
+            'name' => 'Produktion',   
         ),
         array(
             'code' => 'C',
-            'name' => 'Montage',            
+            'name' => 'Montage', 
         ),
         array(
             'code' => 'D',
-            'name' => 'Technik',            
+            'name' => 'Technik', 
         ),
         array(
             'code' => 'E',
-            'name' => 'Übrige',            
+            'name' => 'Übrige',
         ),
         array(
             'code' => 'F',
-            'name' => 'luuXa',            
+            'name' => 'luuXa',
         ),
     );
     
@@ -69,33 +69,34 @@ class LoadCategory implements FixtureInterface
       $categoryParent = new Category();
       $categoryParent->setName($parent['name']);
       $categoryParent->setCode($parent['code']);
+      $categoryParent->setMain(true);
       
       $manager->persist($categoryParent);
-      
-      foreach ($subcategories as $child) {
-          
-          $codeSubCat++;
-          $subcategory = new Category();
-          $subcategory->setName($child);
-          $subcategory->setCode($codeSubCat);
-          $subcategory->setParent($categoryParent);
-          
-          $manager->persist($subcategory);
-          
-          foreach($subsubcategories as $subchild) {
-            $codeSubSubCat++;
-            $subsubcategory = new Category();
-            $subsubcategory->setName($subchild);
-            $subsubcategory->setCode($codeSubSubCat);
-            $subsubcategory->setParent($subcategory);
-            
-            $manager->persist($subsubcategory);
-          }
-          
-      }      
-                
     }
+      
+    foreach ($subcategories as $child) {
 
+        $codeSubCat++;
+        $subcategory = new Category();
+        $subcategory->setName($child);
+        $subcategory->setCode($codeSubCat);
+        $subcategory->setMain(false);
+
+        $manager->persist($subcategory);
+
+        foreach($subsubcategories as $subchild) {
+          $codeSubSubCat++;
+          $subsubcategory = new Category();
+          $subsubcategory->setName($subchild);
+          $subsubcategory->setCode($codeSubSubCat);
+          $subsubcategory->setParent($subcategory);
+          $subsubcategory->setMain(false);
+
+          $manager->persist($subsubcategory);
+        }
+
+    }      
+                
     $manager->flush();
   }
     

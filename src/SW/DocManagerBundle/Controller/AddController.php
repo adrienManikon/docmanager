@@ -51,7 +51,38 @@ class AddController extends Controller
             
         }
         
-        return $this->render('SWDocManagerBundle:Add:categorylist.html.twig', array('status' => $status));
+        $repository = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('SWDocManagerBundle:Category');
+        
+        $mainCategories = $repository->findByMain(true);
+        $subsubcategories = $repository->getSubSubCategories();
+        $subCategories = $repository->findBy(array(
+            'main' => false,
+            'parent' => null
+        ));
+        
+        return $this->render('SWDocManagerBundle:Add:categorylist.html.twig', array(
+            'status' => $status,
+            'maincategories' => $mainCategories,
+            'subcategories' => $subCategories,
+            'subsubcategories' => $subsubcategories,
+                ));
+    }
+    
+    public function buildSubCategories($subsubcategories) {
+        
+        $subCategories = array();
+        
+        foreach ($subsubcategories as $subsubcategory) {
+            
+            $subCategories[] = $subsubcategory->getParent();
+            
+        }
+        
+        return $subCategories;
+        
     }
     
     public function uploadViewAction(Request $request)

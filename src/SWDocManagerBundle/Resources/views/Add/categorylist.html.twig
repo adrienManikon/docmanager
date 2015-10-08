@@ -1,0 +1,153 @@
+{% extends "SWDocManagerBundle:Add:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}  
+<div class="grid" id="header-document">
+    <div class="row cells3">
+        <div class="cell padding20 bg-cyan">
+            <div class="flex-grid">
+                <div class="row cells2">
+                    <div class="cell colspan2"><span class="number number-blue">1</span></div><div class="cell colspan4"><h3>Kategorien</h3></div>                    
+                </div>
+            </div>
+        </div>
+
+        <div class="cell padding20 bg-steel">
+            <div class="flex-grid">
+                <div class="row cells2">
+                    <div class="cell colspan2"><span class="number number-steel">2</span></div><div class="cell colspan4"><h3>Dokument</h3></div>                    
+                </div>
+            </div>
+        </div>
+
+        <div class="cell padding20 bg-steel">
+            <div class="flex-grid">
+                <div class="row cells2">
+                    <div class="cell colspan2"><span class="number number-steel">3</span></div><div class="cell colspan4"><h3>Veröffentlichen</h3></div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="category-block" class="grid">
+
+    <form method="POST" data-role="validator" data-show-required-state="false" data-hint-mode="hint" data-hint-easing="easeOutBounce" data-hide-error="5000" novalidate="novalidate">
+        <div class="row cells6">
+            {% for maincategory in maincategories %}
+                <div class="cell">                                
+                    <label class="input-control radio">
+                        <input type="radio" name="category" value="{{ maincategory.id }}" checked>
+                        <span class="check"></span>
+                        <span class="caption">{{ maincategory.name }}</span>
+                    </label>
+                </div>                
+            {% endfor %}                        
+        </div>
+
+        <div class="row cells3">
+            
+            {% for i in 1..3 %}
+                <div class="cell">
+                    <div class="select-tools">
+                        <div class="input-control header-select select full-size">
+                            <select>
+                                {% for subcategory in subcategories %}
+                                    <option value="{{ subcategory.name }}">{{ subcategory.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-control rows-select select multiple full-size" style="height: 100px">
+                            <select name="{{ 'select' ~ i }}" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
+                                {% for subsubcategory in subsubcategories %}
+                                    <option class="{{ subsubcategory.parent.name }}" value="{{ subsubcategory.id }}">{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="input-state-error mif-warming"></span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row cells12">
+            <div class="cell offset8 colspan4">
+                <button class="button primary full-size" type="submit">weiter</button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="row cells2" id="loading">
+        <div class="cell offset1">
+            <span class="mif-spinner4 mif-ani-pulse"></span>
+        </div>
+    </div> 
+    
+    <div id="documents-list">
+        <div class="row cells1">
+            <div class="cell">
+                <h3>Vorhandene Dokumente</h3>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="sortable-column sort-desc">Name</th>
+                    <th class="sortable-column sort-desc">Datum</th>
+                    <th class="sortable-column">Bezeichnung</th>
+                    <th class="sortable-column">Von</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>
+            <tr>
+                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>
+            <tr>
+                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                <td>20.11.2015</td>
+                <td>DEEC2A</td>
+                <td>tbe</td>
+                <td><span class="mif-pencil"></span></td>
+                <td><span class="mif-search"></span></td>
+            </tr>            
+        </table>
+    </div>
+</div>
+
+<div data-role="dialog" id="success" class="padding20 dialog success" data-close-button="true" data-type="success">
+    <h1>Uploading successfull</h1>
+    <p>
+        Your files have been uploaded.
+    </p>
+</div>
+
+<div data-role="dialog" id="alert" class="padding20 dialog alert" data-close-button="true" data-type="alert">
+    <h1>Error</h1>
+    <p>
+        Error during upload.
+    </p>
+</div>
+
+<span id="status" class="hidden">{{ status }}</span>
+        
+{% endblock %}
+
+{% block javascript %}{{ parent() }}
+    {% javascripts
+        '@SWDocManagerBundle/Resources/public/js/categorylist.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
