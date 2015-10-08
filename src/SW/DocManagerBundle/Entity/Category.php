@@ -34,6 +34,12 @@ class Category
      * @ORM\Column(name="code", type="string", length=255)
      */
     private $code;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $parent;
 
 
     /**
@@ -93,5 +99,28 @@ class Category
     {
         return $this->code;
     }
-}
 
+    /**
+     * Set parent
+     *
+     * @param \SW\DocManagerBundle\Entity\Category $parent
+     *
+     * @return Category
+     */
+    public function setParent(\SW\DocManagerBundle\Entity\Category $parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \SW\DocManagerBundle\Entity\Category
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+}
