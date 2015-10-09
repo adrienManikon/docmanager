@@ -165,12 +165,12 @@ class AddController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $documentRef = $uploadSession->getDocumentRef();
-        
         foreach ($uploadSession->getDocuments() as $document) {
             
             $document->setCode($documentRef->getCode());
             $document->setCategory($documentRef->getCategory());
             $document->setSubCategories($documentRef->getSubCategories());
+            $document->setCreator($documentRef->getCreator());
             $document->setDisabled(!$temporary);
             
             $document->upload($temporary);

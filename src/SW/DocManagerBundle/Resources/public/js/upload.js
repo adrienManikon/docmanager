@@ -45,16 +45,19 @@ function addTagForm($collectionHolder) {
         var name = element.name;
         var $block = $('<div class="input-control text full-size"></div>').append(element);
         
+        if (contains(name, 'category') || contains(name, 'creator'))
+            return;
+        
         if (contains(name, 'code') || contains(name, 'initials') || contains(name, 'date')) {
             $block = $('<div class="cell colspan2"></div>').append($block);
             if(contains(name, 'code')) {
-                $('input', $block).val("DEEC2A");
+                $('input', $block).val($('#sw_docmanagerbundle_uploadsession_documents_0_code').val());
             }
             if(contains(name, 'initials')) {
                 $('input', $block).val("AM");
             }
             if(contains(name, 'date')) {
-                $('input', $block).val("18.02.2015");
+                $('input', $block).val($('#sw_docmanagerbundle_uploadsession_documents_0_date').val());
             }
         } else if (contains(name, 'name')) {
             $block = $('<div class="cell colspan5"></div>').append($block);
