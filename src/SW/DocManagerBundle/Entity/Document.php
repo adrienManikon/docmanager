@@ -366,7 +366,7 @@ class Document
         return __DIR__.'/../../../../web/'.$this->getUploadTempDir();
     }
     
-    public function generateCode()
+    public function generateCode($categories = null)
     {
         $this->code = '';
         
@@ -374,7 +374,9 @@ class Document
             $this->code .= $this->category->getCode();
         }
         
-        foreach ($this->subCategories as $subCategory) {
+        $categories = $categories == null ? $this->subCategories : $categories;
+        
+        foreach ($categories as $subCategory) {
             $this->code .= $subCategory->getCode();
         }
         

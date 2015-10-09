@@ -9,13 +9,11 @@
 namespace SW\DocManagerBundle\Controller;
 
 use SW\DocManagerBundle\Entity\Document;
-use SW\DocManagerBundle\Form\CategoryType;
 use SW\DocManagerBundle\Entity\UploadSession;
 use SW\DocManagerBundle\Form\UploadSessionType;
 use SW\DocManagerBundle\Form\DocumentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use \Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 
 
@@ -46,8 +44,8 @@ class AddController extends Controller
             
             $document->setDate(new DateTime("2012-07-08"));
             $document->setCategory($category);
-            $document->setSubCategories($subCategories);
-            $document->generateCode();
+            $document->generateCode($subCategories);
+            $document->setSubCategories($this->array_unique_categories($subCategories));
             $document->setDisabled(false);
             
             $this->saveObject($document);
@@ -197,5 +195,22 @@ class AddController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository($classe);
+    }
+    
+    public function array_unique_categories($array) {
+        
+        $ids = array();
+        $arrayUnique = array();
+        
+        foreach ($array as $category) {
+            
+            if (!in_array($category->getId(), $ids)) {
+                $arrayUnique[] = $category;
+                $ids[] = $category->getId();
+            }
+        }
+        
+        return $arrayUnique;
+        
     }
 }
