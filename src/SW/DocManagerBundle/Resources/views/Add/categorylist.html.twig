@@ -38,7 +38,7 @@
             {% for maincategory in maincategories %}
                 <div class="cell">                                
                     <label class="input-control radio">
-                        <input type="radio" name="category" value="{{ maincategory.id }}" checked>
+                        <input type="radio" class="category-radio" position="0" name="category" value="{{ maincategory.id }}" checked>
                         <span class="check"></span>
                         <span class="caption">{{ maincategory.name }}</span>
                     </label>
@@ -58,7 +58,7 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="input-control rows-select select multiple full-size" style="height: 100px">
+                        <div class="input-control rows-select select multiple full-size" position='{{ i }}' style="height: 100px">
                             <select name="{{ 'select' ~ i }}" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
                                 {% for subsubcategory in subsubcategories %}
                                     <option class="{{ subsubcategory.parent.name }}" value="{{ subsubcategory.id }}">{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
@@ -90,40 +90,42 @@
                 <h3>Vorhandene Dokumente</h3>
             </div>
         </div>
-        <table class="table">
-            <thead>
+        <div id="documents-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="sortable-column sort-desc">Name</th>
+                        <th class="sortable-column sort-desc">Datum</th>
+                        <th class="sortable-column">Bezeichnung</th>
+                        <th class="sortable-column">Von</th>
+                    </tr>
+                </thead>
                 <tr>
-                    <th class="sortable-column sort-desc">Name</th>
-                    <th class="sortable-column sort-desc">Datum</th>
-                    <th class="sortable-column">Bezeichnung</th>
-                    <th class="sortable-column">Von</th>
+                    <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
+                    <td>20.11.2015</td>
+                    <td>DEEC2A</td>
+                    <td>tbe</td>
+                    <td><span class="mif-pencil"></span></td>
+                    <td><span class="mif-search"></span></td>
                 </tr>
-            </thead>
-            <tr>
-                <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
-                <td>20.11.2015</td>
-                <td>DEEC2A</td>
-                <td>tbe</td>
-                <td><span class="mif-pencil"></span></td>
-                <td><span class="mif-search"></span></td>
-            </tr>
-            <tr>
-                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-                <td>20.11.2015</td>
-                <td>DEEC2A</td>
-                <td>tbe</td>
-                <td><span class="mif-pencil"></span></td>
-                <td><span class="mif-search"></span></td>
-            </tr>
-            <tr>
-                <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-                <td>20.11.2015</td>
-                <td>DEEC2A</td>
-                <td>tbe</td>
-                <td><span class="mif-pencil"></span></td>
-                <td><span class="mif-search"></span></td>
-            </tr>            
-        </table>
+                <tr>
+                    <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                    <td>20.11.2015</td>
+                    <td>DEEC2A</td>
+                    <td>tbe</td>
+                    <td><span class="mif-pencil"></span></td>
+                    <td><span class="mif-search"></span></td>
+                </tr>
+                <tr>
+                    <td><span class="mif-file-image"></span> Lorem Ipsum</td>
+                    <td>20.11.2015</td>
+                    <td>DEEC2A</td>
+                    <td>tbe</td>
+                    <td><span class="mif-pencil"></span></td>
+                    <td><span class="mif-search"></span></td>
+                </tr>            
+            </table>
+        </div>
     </div>
 </div>
 

@@ -59,4 +59,20 @@ class CategoryRepository extends EntityRepository
                 ->getResult();
         
     }
+    
+    public function getCode($id) {
+        
+        $queryBuilder = $this->createQueryBuilder('c');        
+        $queryBuilder
+                ->select('c.code')
+                ->where('c.id = :id')
+                ->setParameter('id', $id);
+        
+        $array = $queryBuilder
+                ->getQuery()
+                ->getOneOrNullResult();
+        
+        return sizeof($array) > 0 ? $array['code'] : '';
+        
+    }
 }

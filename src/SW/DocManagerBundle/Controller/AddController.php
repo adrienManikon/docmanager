@@ -15,7 +15,8 @@ use SW\DocManagerBundle\Form\DocumentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Description of AddController
@@ -213,4 +214,59 @@ class AddController extends Controller
         return $arrayUnique;
         
     }
+    
+    /**                                                                                   
+     * @Method({"GET", "POST"})
+    */
+    public function listAction(Request $request)    
+    {
+        if ($request->isXMLHttpRequest()) {
+            
+            $idcategories = $request->request->get("idcategories");
+            $code = "";
+            
+            $repository = $this->getRepository('SWDocManagerBundle:Category');
+            
+            foreach ( $idcategories as $idcategory) {
+                
+                if ($idcategory > -1) {
+                    
+                    $code .= $repository->getCode($idcategory);
+                    
+                }
+                
+            }
+            
+            $repDoc = $this->getRepository('SWDocManagerBundle:Document');
+            
+            $documents = $repDoc->findByCode($code);
+            $documentsJson = $this->encodeJson($documents);
+            return new JsonResponse(array(
+                'code' => $code,
+                'documents' => json_decode($documentsJson)
+                    ));
+    }
+
+        return new Response('This is not ajax!', 400);
+    }
+    
+    protected function encodeJson($documents) {
+        
+        $array = array();
+        
+        foreach ($documents as $document) {
+            
+            $array[] = array(
+                "id" => $document->getId(),
+                "name" => $document->getName(),
+                "date" => $document->getDate(),
+                "code" => $document->getCode(),
+                "creator" => $document->getCreator()->getInitial()                
+            );
+            
+        }
+        return json_encode($array);
+        
+    }
+    
 }
