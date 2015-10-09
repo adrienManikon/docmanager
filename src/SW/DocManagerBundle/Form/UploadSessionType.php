@@ -4,7 +4,7 @@ namespace SW\DocManagerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UploadSessionType extends AbstractType
 {
@@ -16,13 +16,9 @@ class UploadSessionType extends AbstractType
     {
         $builder
             ->add('documents', 'collection', array(
-                'type' => new DocumentType(),
+                'type' => new DocumentType(true),
                 'allow_add' => true,
                 ))
-            ->add('category', new CategoryType())
-            ->add('subcategory1', new CategoryType())
-            ->add('subcategory2', new CategoryType())
-            ->add('subcategory3', new CategoryType())
             ->add('weiter', 'submit')
         ;
     }
@@ -30,7 +26,7 @@ class UploadSessionType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'SW\DocManagerBundle\Entity\UploadSession'

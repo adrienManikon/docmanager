@@ -2,54 +2,39 @@
 
 namespace SW\DocManagerBundle\Entity;
 
-use \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * UploadSession
  *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="SW\DocManagerBundle\Entity\UploadSessionRepository")
  */
 class UploadSession
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var array
-     *
-     */
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Document")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $documentRef;
+    
+  /**
+   * @ORM\ManyToMany(targetEntity="SW\DocManagerBundle\Entity\Document", cascade={"persist"})
+   */
     private $documents;
-    
-     /**
-     * @var Category
-     *
-     */
-    private $category;
-    
-     /**
-     * @var Category
-     */
-    private $subcategory1;
-    
-     /**
-     * @var Category
-     *
-     */
-    private $subcategory2;
-    
-     /**
-     * @var Category
-     *
-     */
-    private $subcategory3;
-    
-    /**
-     * @var boolean
-     *
-     */
-    private $publish;
-
+            
     public function __construct()
     {
         $this->documents = new ArrayCollection();
@@ -89,63 +74,12 @@ class UploadSession
         return $this->documents;
     }
     
-    public function getCategory() {
-        return $this->category;
+    public function getDocumentRef() {
+        return $this->documentRef;
     }
 
-    public function getSubcategory1() {
-        return $this->subcategory1;
+    public function setDocumentRef(Document $documentRef) {
+        $this->documentRef = $documentRef;
     }
-
-    public function getSubcategory2() {
-        return $this->subcategory2;
-    }
-
-    public function getSubcategory3() {
-        return $this->subcategory3;
-    }
-
-    public function setCategory($category) {
-        $this->category = $category;
-    }
-
-    public function setSubcategory1($subcategory1) {
-        $this->subcategory1 = $subcategory1;
-    }
-
-    public function setSubcategory2($subcategory2) {
-        $this->subcategory2 = $subcategory2;
-    }
-
-    public function setSubcategory3($subcategory3) {
-        $this->subcategory3 = $subcategory3;
-    }
-
-    public function getPublish() {
-        return $this->publish;
-    }
-
-    public function setPublish($publish) {
-        $this->publish = $publish;
-    }
-    
-    public function getCode() {
-        $code = '';
-        
-        if ($this->category != null) {
-            $code .= $this->category->getCode();
-        }
-        if ($this->subcategory1 != null) {
-            $code .= $this->subcategory1->getCode();
-        }
-        if ($this->subcategory2 != null) {
-            $code .= $this->subcategory2->getCode();
-        }
-        if ($this->subcategory3 != null) {
-            $code .= $this->subcategory3->getCode();
-        }     
-        
-        return $code;
-    }    
 }
 

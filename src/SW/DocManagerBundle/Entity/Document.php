@@ -27,21 +27,21 @@ class Document
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
      */
     private $code;
     
         /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -55,7 +55,7 @@ class Document
     /**
      * @var string
      *
-     * @ORM\Column(name="initials", type="string", length=255)
+     * @ORM\Column(name="initials", type="string", length=255, nullable=true)
      */
     private $initials;
 
@@ -71,19 +71,19 @@ class Document
     private $subCategories;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Category")
     * @ORM\JoinColumn(nullable=false)
     */
     private $category;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\User", cascade={"persist"})
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\User")
+    * @ORM\JoinColumn(nullable=true)
     */
     private $creator;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format")
     * @ORM\JoinColumn(nullable=true)
     */
     private $format;
@@ -94,6 +94,14 @@ class Document
      * @ORM\Column(name="alt", type="string", length=255, nullable=true)
      */
     private $alt;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
+    
     
     public function __construct() {
         
@@ -357,5 +365,91 @@ class Document
     {
         return __DIR__.'/../../../../web/'.$this->getUploadTempDir();
     }
-}
+    
+    public function generateCode()
+    {
+        $this->code = '';
+        
+        if ($this->category != null) {
+            $this->code .= $this->category->getCode();
+        }
+        
+        foreach ($this->subCategories as $subCategory) {
+            $this->code .= $subCategory->getCode();
+        }
+        
+        return $this;
+    }
 
+    /**
+     * Set alt
+     *
+     * @param string $alt
+     *
+     * @return Document
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * Get alt
+     *
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * Add subCategory
+     *
+     * @param \SW\DocManagerBundle\Entity\Category $subCategory
+     *
+     * @return Document
+     */
+    public function addSubCategory(\SW\DocManagerBundle\Entity\Category $subCategory)
+    {
+        $this->subCategories[] = $subCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove subCategory
+     *
+     * @param \SW\DocManagerBundle\Entity\Category $subCategory
+     */
+    public function removeSubCategory(\SW\DocManagerBundle\Entity\Category $subCategory)
+    {
+        $this->subCategories->removeElement($subCategory);
+    }
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     *
+     * @return Document
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
+    }
+}

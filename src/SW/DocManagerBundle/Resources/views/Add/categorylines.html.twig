@@ -1,8 +1,9 @@
 <div class="row cells1">
     <div class="cell" id="categoriesline">
-        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(form.category.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
-        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(form.subcategory1.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
-        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(form.subcategory2.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
-        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(form.subcategory3.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
+        {% set document = form.documents[0] %}
+        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(document.category.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
+        {% for subcategory in document.subCategories %}
+            <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(subcategory.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
+        {% endfor %}
     </div>
 </div> 

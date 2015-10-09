@@ -9,7 +9,19 @@ sw_doc_manager_add:
         status:
     requirements:
         status: (success|failed)?
-       
+        
+sw_doc_manager_upload:
+    path:     /add/{id}
+    defaults: 
+        _controller: SWDocManagerBundle:Add:uploadView       
+     
+sw_doc_manager_recap:
+    path:     /recap/{id}
+    defaults: 
+        _controller: SWDocManagerBundle:Add:recap
+    requirements: 
+        id: \d+
+        
 sw_doc_manager_publish:
     path:     /publish
     defaults: { _controller: SWDocManagerBundle:Add:publish }
