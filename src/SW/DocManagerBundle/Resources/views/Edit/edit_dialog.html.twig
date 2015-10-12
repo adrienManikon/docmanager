@@ -2,7 +2,7 @@
     
     <h1>Edit Document</h1>
     
-    <form id="edit-dialog-form" action="{{ path('sw_doc_manager_edit_post') }}" title="" method="post">
+    <form id="edit-dialog-form" action="{{ path('sw_doc_manager_edit_post', { 'force' : 'false' }) }}" title="" method="post" data-url-force="{{ path('sw_doc_manager_edit_post', { 'force' : 'true' }) }}">
         <div class="row cells12 fileInput">
             <div class="cell colspan2">
                 <div class="input-control text full-size">
@@ -50,4 +50,11 @@
     <p>
         Your file has been well saved.
     </p>
-</div>        
+</div>
+        
+<div data-role="dialog" id="edit-dialog-error" class="padding20 dialog error" data-close-button="true" data-type="error" data-overlay="true" data-overlay-color="op-dark">
+    <h1>Error</h1>
+    <p>
+        <span id="error-message"></span>
+    </p>
+</div>         

@@ -52,4 +52,13 @@ class AbstractController extends Controller {
     public function isMethodPost(Request $request) {
         return $request->isMethod("POST");
     }
+    
+    public function replaceDocument($oldDocument, $document) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($oldDocument);
+        $em->persist($document);
+        $em->flush();
+        
+    }
 }

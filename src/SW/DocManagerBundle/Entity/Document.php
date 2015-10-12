@@ -339,11 +339,27 @@ class Document
                 return;
             
             $file->move($this->getUploadRootDir(), $this->name);
-            
+            $this->path = $this->getUploadRootDir() . '/' . $this->name;
         }
         
         return $this;
 
+    }
+    
+    public function renameFile($newname)
+    {
+        
+        $file = new File($this->getFilePath());
+
+        if (null === $file)
+            return;
+        
+        $file->move($this->getUploadRootDir(), $newname);        
+        $this->name = $newname;
+        $this->path = $this->getUploadRootDir() . '/' . $newname;
+        
+        return $this;
+        
     }
     
     public function getFilePath()

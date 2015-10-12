@@ -20,8 +20,28 @@
             {% endblock %}
         
         </div>
+            
+        <div data-role="dialog" id="already-exist-dialog" class="padding20 dialog grid" data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
 
-    </body>
+            <h1>A document with the same name already exists</h1>
+            
+            <div class="row cells1">
+                <div class="cell">
+                    <p>Would you like to override the file ?</p>
+                </div>
+            </div>
+            
+            <div class="row cells12">
+                <div class="cell offset8 colspan2">
+                    <button class="button" id="cancelOverride">Cancel</button>
+                </div>
+                <div class="cell colspan2">
+                    <button class="button square-button" id="confirmOverride">OK</button>
+                </div>
+            </div>
+        </div>
+
+    </body>    
     
 
     {% block javascript %}

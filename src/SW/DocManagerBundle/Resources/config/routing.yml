@@ -35,6 +35,8 @@ sw_doc_manager_view:
     defaults: { _controller: SWDocManagerBundle:View:render }
     
 sw_doc_manager_edit_post:
-    path: /edit/
+    path: /edit/{force}
     defaults: { _controller: SWDocManagerBundle:Edit:edit }
-    
+    requirements:
+        force: true|false
+        

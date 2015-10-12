@@ -10,4 +10,4 @@ class DefaultController extends Controller
     {
         return $this->render('SWDocManagerBundle:Default:index.html.twig', array('name' => $name));
     }
-}
+    }
