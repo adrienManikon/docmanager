@@ -28,7 +28,7 @@ sw_doc_manager_publish:
     
 sw_doc_manager_list_ajax:
     path:   /list
-    defaults: { _controller: SWDocManagerBundle:Add:list }
+    defaults: { _controller: SWDocManagerBundle:View:list }
     
 sw_doc_manager_view:
     path:   /view/{id}
