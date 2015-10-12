@@ -10,4 +10,10 @@ namespace SW\DocManagerBundle\Entity;
  */
 class UploadSessionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByDocumentName($document)
+    {
+        return $this->createQueryBuilder('u')
+                ->innerJoin('u.documents', 'd', 'WITH', 'd.name = :superCategoryName')
+                ->setParameter('superCategoryName', $document->getName());
+    }
 }

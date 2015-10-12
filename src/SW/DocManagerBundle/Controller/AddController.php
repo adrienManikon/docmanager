@@ -176,6 +176,9 @@ class AddController extends AbstractController
             
             $document->upload($temporary);
             
+            if (!$temporary)
+                $this->removeDocumentbyName($document->getName());
+            
             $em->persist($document);
             
         }
@@ -183,7 +186,7 @@ class AddController extends AbstractController
         $em->flush();
         
     }
-        
+   
     public function array_unique_categories($array) {
         
         $ids = array();
@@ -218,6 +221,14 @@ class AddController extends AbstractController
         $uploadSession->setDocuments($documents);
         
         return $uploadSession;
+        
+    }
+    
+    protected function deleteCache($user) {
+        
+        //$repoUploadSession = $this->getRepository("SWDocManagerBundle:UploadSession");
+        
+        //$uploads = $repoUploadSession->findBy
         
     }
 }

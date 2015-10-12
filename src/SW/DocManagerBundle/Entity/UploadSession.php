@@ -26,7 +26,7 @@ class UploadSession
 
     /**
     * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Document")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(nullable=true)
     */
     private $documentRef;
     

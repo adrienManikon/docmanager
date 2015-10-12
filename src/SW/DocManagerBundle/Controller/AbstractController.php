@@ -61,4 +61,30 @@ class AbstractController extends Controller {
         $em->flush();
         
     }
+    
+   public function removeDocumentbyName($name) {
+       
+       $repoUpload = $this->getRepository("SWDocManagerBundle:UploadSession");             
+        $repo = $this->getRepository("SWDocManagerBundle:Document");
+        $document = $repo->findOneByName($name);
+        
+        if ($document != null) {/*
+            $uploadSession = $repoUpload->findOneByDocumentRef($document);
+            $uploadSessions = $repoUpload->findByDocumentName($document);            
+            $em = $this->getDoctrine()->getManager();
+            if ($uploadSession != null)
+                $em->remove($uploadSession);
+            if ($uploadSessions != null)
+                foreach ($uploadSessions as $uploadSession) {
+                $em->remove($uploadSession);
+                }
+            $em->flush();  
+            $em->remove($document);*/
+            $em = $this->getDoctrine()->getManager();
+            $document->setDisabled(true);
+            $em->persist($document);
+            $em->flush();
+        }
+        
+    }
 }
