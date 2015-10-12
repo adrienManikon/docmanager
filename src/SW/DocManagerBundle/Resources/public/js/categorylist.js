@@ -74,6 +74,7 @@ function showList() {
 
 function fillTable(documents) {
     
+    var $url = $("#documents-table").attr("data-url").replace("/-1", "");
     var $table = $('<table class="table"></table>');
     thead ='<thead>';
     thead += '<tr>';
@@ -93,7 +94,7 @@ function fillTable(documents) {
         $td += '<td>' + document.code + '</td>';
         $td += '<td>' + document.creator + '</td>';
         $td += '<td><span class="mif-pencil"></span></td>';
-        $td += '<td><span class="mif-search"></span></td>';
+        $td += '<td><a target="_blank" href="' + $url + '/' + document.id + '"><span class="mif-search"></span></a></td>';
         
         $newRow = $('<tr></tr>').append($td);
         

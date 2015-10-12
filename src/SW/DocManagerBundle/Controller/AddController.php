@@ -12,7 +12,6 @@ use SW\DocManagerBundle\Entity\Document;
 use SW\DocManagerBundle\Entity\UploadSession;
 use SW\DocManagerBundle\Form\UploadSessionType;
 use SW\DocManagerBundle\Form\DocumentType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,7 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author adrien.manikon
  */
-class AddController extends Controller
+class AddController extends AbstractController
 {
     
     public function categoryListAction($status = null, Request $request)
@@ -152,16 +151,7 @@ class AddController extends Controller
             ->add('Veröffentlichen', 'submit')
             ->getForm();
     }
-    
-    /**
-     * if request is method POST
-     * 
-     * @return boolean
-     */
-    public function isMethodPost(Request $request) {
-        return $request->isMethod("POST");
-    }
-    
+        
     public function uploadDocuments($temporary, UploadSession $uploadSession) {
         
         $em = $this->getDoctrine()->getManager();
@@ -183,21 +173,7 @@ class AddController extends Controller
         $em->flush();
         
     }
-    
-    private function saveObject($object)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($object);
-        $em->flush();
-    }
-    
-    private function getRepository($classe) {
-        return $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository($classe);
-    }
-    
+        
     public function array_unique_categories($array) {
         
         $ids = array();
@@ -269,9 +245,4 @@ class AddController extends Controller
         
     }
     
-    public function dateToString(DateTime $date) {
-        $dateService = $this->container->get('sw_doc_manager.date_service');
-        
-        return $dateService->dateToString($date);
-    }
 }

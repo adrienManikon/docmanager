@@ -30,3 +30,7 @@ sw_doc_manager_list_ajax:
     path:   /list
     defaults: { _controller: SWDocManagerBundle:Add:list }
     
+sw_doc_manager_view:
+    path:   /view/{id}
+    defaults: { _controller: SWDocManagerBundle:View:render }
+    

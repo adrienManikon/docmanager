@@ -345,6 +345,11 @@ class Document
         return $this;
 
     }
+    
+    public function getFilePath()
+    {
+        return $this->getUploadRootDir() . '/' . $this->name;
+    }
 
     public function getUploadDir()
     {

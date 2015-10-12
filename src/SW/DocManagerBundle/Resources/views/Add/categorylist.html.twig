@@ -90,41 +90,7 @@
                 <h3>Vorhandene Dokumente</h3>
             </div>
         </div>
-        <div id="documents-table">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="sortable-column sort-desc">Name</th>
-                        <th class="sortable-column sort-desc">Datum</th>
-                        <th class="sortable-column">Bezeichnung</th>
-                        <th class="sortable-column">Von</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td><span class="mif-file-pdf"></span> Lorem Ipsum</td>
-                    <td>20.11.2015</td>
-                    <td>DEEC2A</td>
-                    <td>tbe</td>
-                    <td><span class="mif-pencil"></span></td>
-                    <td><span class="mif-search"></span></td>
-                </tr>
-                <tr>
-                    <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-                    <td>20.11.2015</td>
-                    <td>DEEC2A</td>
-                    <td>tbe</td>
-                    <td><span class="mif-pencil"></span></td>
-                    <td><span class="mif-search"></span></td>
-                </tr>
-                <tr>
-                    <td><span class="mif-file-image"></span> Lorem Ipsum</td>
-                    <td>20.11.2015</td>
-                    <td>DEEC2A</td>
-                    <td>tbe</td>
-                    <td><span class="mif-pencil"></span></td>
-                    <td><span class="mif-search"></span></td>
-                </tr>            
-            </table>
+        <div id="documents-table" data-url="{{ path('sw_doc_manager_view', { 'id': '-1' }) }}">
         </div>
     </div>
 </div>
