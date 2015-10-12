@@ -22,8 +22,12 @@ class AbstractController extends Controller {
     
     public function dateToString(DateTime $date) {
         $dateService = $this->container->get('sw_doc_manager.date_service');
-        
         return $dateService->dateToString($date);
+    }
+    
+    public function stringToDate($date) {
+        $dateService = $this->container->get('sw_doc_manager.date_service');
+        return $dateService->stringToDate($date);
     }
     
     protected function saveObject($object)

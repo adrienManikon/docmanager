@@ -108,6 +108,8 @@
         Error during upload.
     </p>
 </div>
+        
+{{ include("SWDocManagerBundle:Edit:edit_dialog.html.twig") }}
 
 <span id="status" class="hidden">{{ status }}</span>
         
@@ -115,7 +117,8 @@
 
 {% block javascript %}{{ parent() }}
     {% javascripts
-        '@SWDocManagerBundle/Resources/public/js/categorylist.js' %}
+        '@SWDocManagerBundle/Resources/public/js/categorylist.js'
+        '@SWDocManagerBundle/Resources/public/js/edit.js'%}
       <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock %}

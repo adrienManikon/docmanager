@@ -47,7 +47,7 @@ $(function(){
     }
     
 });
-
+    
 function showList() {
     $.ajax({
         type: "POST",
@@ -93,7 +93,7 @@ function fillTable(documents) {
         $td += '<td>' + document.date + '</td>';
         $td += '<td>' + document.code + '</td>';
         $td += '<td>' + document.creator + '</td>';
-        $td += '<td><span class="mif-pencil"></span></td>';
+        $td += '<td><span class="edit-document mif-pencil" onclick=\'editDocument(' + document.id + ', \"' + document.name + '\", \"' + document.date + '\", \"' + document.code + '\", \"' + document.creator + '\")\' data-id="' + document.id + '"></span></td>';
         $td += '<td><a target="_blank" href="' + $url + '/' + document.id + '"><span class="mif-search"></span></a></td>';
         
         $newRow = $('<tr></tr>').append($td);

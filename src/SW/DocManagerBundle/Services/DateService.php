@@ -17,4 +17,10 @@ class DateService {
         return $date->format(self::DATE_FORMAT);
         
     }
+    
+    public function StringToDate($date) {
+        
+        return DateTime::createFromFormat(self::DATE_FORMAT, $date);
+        
+    }
 }

@@ -34,3 +34,7 @@ sw_doc_manager_view:
     path:   /view/{id}
     defaults: { _controller: SWDocManagerBundle:View:render }
     
+sw_doc_manager_edit_post:
+    path: /edit/
+    defaults: { _controller: SWDocManagerBundle:Edit:edit }
+    
