@@ -239,7 +239,7 @@ class AddController extends Controller
             
             $repDoc = $this->getRepository('SWDocManagerBundle:Document');
             
-            $documents = $repDoc->findByCode($code);
+            $documents = $repDoc->getByCode($code);
             $documentsJson = $this->encodeJson($documents);
             return new JsonResponse(array(
                 'code' => $code,
@@ -259,7 +259,7 @@ class AddController extends Controller
             $array[] = array(
                 "id" => $document->getId(),
                 "name" => $document->getName(),
-                "date" => $document->getDate(),
+                "date" => $this->dateToString($document->getDate()),
                 "code" => $document->getCode(),
                 "creator" => $document->getCreator()->getInitial()                
             );
@@ -269,4 +269,9 @@ class AddController extends Controller
         
     }
     
+    public function dateToString(DateTime $date) {
+        $dateService = $this->container->get('sw_doc_manager.date_service');
+        
+        return $dateService->dateToString($date);
+    }
 }

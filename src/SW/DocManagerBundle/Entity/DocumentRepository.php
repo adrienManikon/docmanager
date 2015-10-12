@@ -10,4 +10,21 @@ namespace SW\DocManagerBundle\Entity;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
+    const LIMIT_SEARCH = 10;
+
+
+    public function getByCode($code) {
+        $queryBuilder = $this->createQueryBuilder('d');    
+        
+        $queryBuilder
+                ->where('d.code LIKE :code')
+                ->andWhere('d.disabled = 1')
+                ->setParameter('code', '%' . $code . '%')
+                ->setMaxResults(self::LIMIT_SEARCH)
+                ->getQuery();
+        
+        return $queryBuilder
+                ->getQuery()
+                ->getResult();
+    }
 }
