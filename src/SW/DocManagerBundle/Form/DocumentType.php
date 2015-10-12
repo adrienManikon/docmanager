@@ -29,6 +29,9 @@ class DocumentType extends AbstractType
             ->add('path', 'hidden', array(
                 'required'=> false
             ))
+            ->add('nameAlreadyUsed', 'hidden', array(
+                'required'=> false
+            ))
             ->add('name', 'text', array(
                 'attr'=> array('placeholder'=>'Dateiname')
             ))

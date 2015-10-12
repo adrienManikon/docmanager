@@ -19,6 +19,9 @@ class UploadSessionType extends AbstractType
                 'type' => new DocumentType(true),
                 'allow_add' => true,
                 ))
+            ->add('existedNames', 'hidden', array(
+                'required'=> false
+            ))
             ->add('weiter', 'submit')
         ;
     }

@@ -96,27 +96,39 @@ class AddController extends AbstractController
         $document->setName("test.pdf");
         $document->setInitials($user->getInitial());
         $document->setCreator($user);
-         
+        $document->setNameAlreadyUsed(false);
+                 
         $uploadSession = new UploadSession();
         $uploadSession->getDocuments()->add($document);
         $uploadSession->setDocumentRef($document);
         
+        $alreadyExists = false;
         $form = $this->createForm(new UploadSessionType(), $uploadSession);
         
         if ($form->handleRequest($request)->isValid()) {
             
-            $this->uploadDocuments(true, $uploadSession);
+            if (!$uploadSession->hasExistedNames())
+                $uploadSession = $this->checkAvailabityNames($uploadSession);
+            else //User overrides
+                $uploadSession->setExistedNames(false);
             
+            //We keep files in cache
+            $this->uploadDocuments(true, $uploadSession);
             $this->saveObject($uploadSession);
             
-            return $this->redirect($this->generateUrl('sw_doc_manager_recap', array(
-                'id' => $uploadSession->getId()
-            )));
-            
+            if (!$uploadSession->hasExistedNames()) {
+                return $this->redirect($this->generateUrl('sw_doc_manager_recap', array(
+                    'id' => $uploadSession->getId()
+                )));
+            } else {
+                $form = $this->createForm(new UploadSessionType(), $uploadSession);
+                $alreadyExists = true;
+            }            
         }
         
         return $this->render('SWDocManagerBundle:Add:upload.html.twig', array(
             'form' => $form->createView(),
+            'alreadyExists' => $alreadyExists
         ));
     }
             
@@ -187,5 +199,25 @@ class AddController extends AbstractController
         
         return $arrayUnique;
         
-    }        
+    }    
+    
+    public function checkAvailabityNames(UploadSession $uploadSession) {
+        
+        $documents = $uploadSession->getDocuments();
+        $repDocument = $this->getRepository("SWDocManagerBundle:Document");
+        $alreadyUsed = false;
+        
+        foreach ($documents as $document) {
+            if (!$alreadyUsed) {
+                $alreadyUsed = $repDocument->findOneByName($document->getName()) != null;
+            }
+            $document->setNameAlreadyUsed($repDocument->findOneByName($document->getName()) != null);
+        }
+        
+        $uploadSession->setExistedNames($alreadyUsed);
+        $uploadSession->setDocuments($documents);
+        
+        return $uploadSession;
+        
+    }
 }

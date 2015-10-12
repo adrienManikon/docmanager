@@ -34,6 +34,8 @@ class UploadSession
    * @ORM\ManyToMany(targetEntity="SW\DocManagerBundle\Entity\Document", cascade={"persist"})
    */
     private $documents;
+    
+    private $existedNames;
             
     public function __construct()
     {
@@ -81,5 +83,15 @@ class UploadSession
     public function setDocumentRef(Document $documentRef) {
         $this->documentRef = $documentRef;
     }
+    
+    public function hasExistedNames() {
+        return $this->existedNames;
+    }
+
+    public function setExistedNames($existedNames) {
+        $this->existedNames = $existedNames;
+    }
+
+
 }
 

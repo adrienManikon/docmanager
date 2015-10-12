@@ -2,6 +2,12 @@ var nbinput = 1;
 var $collectionHolder;
 
 $(function() {
+    
+    var $alreadyUsed = $("#alreadyExistVar").html();
+    
+    if ($alreadyUsed) {
+        showDialog("#some-exists-dialog");
+    }
     // Get the ul that holds the collection of tags
     $collectionHolder = $('#inputBlock');
 
@@ -20,6 +26,12 @@ $(function() {
             showDialog("#limitFileDialog");
         }
     });
+});
+
+$("#confirmOverride").click(function(){
+    
+    $("#upload-block form").submit();
+    
 });
 
 function addTagForm($collectionHolder) {
@@ -45,7 +57,7 @@ function addTagForm($collectionHolder) {
         var name = element.name;
         var $block = $('<div class="input-control text full-size"></div>').append(element);
         
-        if (contains(name, 'category') || contains(name, 'creator'))
+        if (contains(name, 'category') || contains(name, 'creator') || contains(name, 'nameAlreadyUsed'))
             return;
         
         if (contains(name, 'code') || contains(name, 'initials') || contains(name, 'date')) {

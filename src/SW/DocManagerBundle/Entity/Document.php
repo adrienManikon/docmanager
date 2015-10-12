@@ -102,11 +102,13 @@ class Document
      */
     private $disabled;
     
+    private $nameAlreadyUsed;
     
     public function __construct() {
         
         $this->date = new \DateTime();
         $this->subCategories = new ArrayCollection();
+        $this->nameAlreadyUsed = false;
         
     }
 
@@ -475,4 +477,14 @@ class Document
     {
         return $this->disabled;
     }
+    
+    public function getNameAlreadyUsed() {
+        return $this->nameAlreadyUsed;
+    }
+
+    public function setNameAlreadyUsed($nameAlreadyUsed) {
+        $this->nameAlreadyUsed = $nameAlreadyUsed;
+    }
+
+
 }

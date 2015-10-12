@@ -46,7 +46,8 @@
                         </div>
                     </div>
                     <div class="cell colspan5">
-                        <div class="input-control text full-size">
+                        {{ form_widget(document.nameAlreadyUsed) }}
+                        <div class="input-control text full-size {% if document.vars.value.nameAlreadyUsed %}block-shadow-error{% endif %}">
                             {{ form_widget(document.name) }}
                         </div>                
                     </div>
@@ -69,18 +70,20 @@
                 </div>
             {% endfor %}
         </div>    
-
+        
         <div class="row cells12">
+            {% if alreadyExists == false %}
             <div class="cell offset11 colspan1">
                 <button id="newInputButton" class="button cycle-button">+</button>
             </div>
-        </div>
+            {% endif %}
+        </div>        
 
         <div class="row cells12">
             <div class="cell colspan6 text-small v-align-top">
                 <span class="mif-info"></span> Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
             </div>
-            <div class="cell offset2 colspan4">
+            <div class="cell offset2 colspan4">                
                 {{ form_widget(form.weiter, { 'attr':{'class':'button primary full-size'} }) }}
             </div>
         </div>    
@@ -91,8 +94,31 @@
                 Max. 1GB/ 1000MB oder 5 Dokumente gleichzeitig
             </p>
         </div>
-        <div class="hidden">{{ form_rest(form) }}</div>
+        <div class="hidden">
+            <span id="alreadyExistVar">{{ alreadyExists }}</span>
+            {{ form_rest(form) }}
+        </div>
     {{ form_end(form) }}
+    
+    <div data-role="dialog" id="some-exists-dialog" class="padding20 dialog grid" data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
+
+        <h1>Some names have been already used.</h1>
+
+        <div class="row cells1">
+            <div class="cell">
+                <p>Would you like to override thoses files ?</p>
+            </div>
+        </div>
+
+        <div class="row cells12">
+            <div class="cell offset8 colspan2">
+                <button class="button" id="cancelOverride" onclick="closeDialog('#some-exists-dialog')">Cancel</button>
+            </div>
+            <div class="cell colspan2">
+                <button class="button square-button" id="confirmOverride">OK</button>
+            </div>
+        </div>
+    </div>
 
 </div>
     
