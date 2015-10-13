@@ -45,3 +45,7 @@ sw_doc_manager_delete:
     defaults: { _controller: SWDocManagerBundle:Delete:delete }
     requirements:
         method:   POST
+        
+sw_doc_manager_search:
+    path: /search
+    defaults: { _controller: SWDocManagerBundle:Search:search }

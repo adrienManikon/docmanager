@@ -1,0 +1,103 @@
+{% extends "SWDocManagerBundle:Default:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Search{% endblock %}
+
+{% block body %}
+<div class="grid" id="header-document">
+    <div class="row cells1">
+        <div class="cell padding20 bg-cyan">
+            <h3>Suchen</h3>
+        </div>
+    </div>        
+</div>
+
+<div class="grid" id="form-block">
+    <form id="search-form">
+        
+        <div class="row cells12">
+            <div class="input-control text cell colspan8" data-role="input">
+                <input type="text" name="request" placeholder="suchen mit name, code...">
+                <button class="button"><span class="mif-search"></span></button>
+            </div>
+            <div class="input-control text cell colspan2" data-role="datepicker">
+                <input type="text" name="dateStart" placeholder="von:">
+                <button class="button"><span class="mif-calendar"></span></button>
+            </div>    
+            <div class="input-control text cell colspan2" data-role="datepicker">
+                <input type="text" name="dateEnd" placeholder="bis:">
+                <button class="button"><span class="mif-calendar"></span></button>
+            </div>    
+        </div>
+
+        <div class="accordion row cells1" data-role="accordion">
+            <div class="frame">
+                <div class="heading">Main category</div>
+                <div class="content">
+                    <div class="grid">
+                        <div class="row cells7">
+                            {% for maincategory in maincategories %}
+                                <div class="cell">                                
+                                    <label class="input-control radio">
+                                        <input type="radio" class="category-radio" position="0" name="category" value="{{ maincategory.id }}" {% if maincategory.id == null %}checked{% endif %}>
+                                        <span class="check"></span>
+                                        <span class="caption">{{ maincategory.name }}</span>
+                                    </label>
+                                </div>                
+                            {% endfor %}                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="frame ">
+                <div class="heading">Sub-Category</div>
+                <div class="content">
+                    <div class="grid">
+                        <div class="row cells3">
+                            {% for i in 1..3 %}
+                                <div class="cell">
+                                    <div class="select-tools">
+                                        <div class="input-control header-select select full-size">
+                                            <select>
+                                                {% for subcategory in subcategories %}
+                                                    <option value="{{ subcategory.name }}">{{ subcategory.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="input-control rows-select select multiple full-size" position='{{ i }}' style="height: 100px">
+                                            <select name="{{ 'select' ~ i }}" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
+                                                {% for subsubcategory in subsubcategories %}
+                                                    <option class="{{ subsubcategory.parent.name }}" value="{{ subsubcategory.id }}" {% if subsubcategory.id == null %}selected{% endif %}>{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="input-state-error mif-warming"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="frame ">
+                <div class="heading">Users</div>
+                <div class="content">
+                    <div class="grid">
+                        <div class="row cells1">
+                            <div class="cell">
+                                <div class="input-control header-select select full-size">
+                                    <select>
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}">{{ user.lastname }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div>    
+{% endblock %}
