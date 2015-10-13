@@ -12,19 +12,19 @@
 </div>
 
 <div class="grid" id="form-block">
-    <form id="search-form">
+    <form id="search-form" action="{{ path('sw_doc_manager_search') }}">
         
         <div class="row cells12">
             <div class="input-control text cell colspan8" data-role="input">
-                <input type="text" name="request" placeholder="suchen mit name, code...">
+                <input type="text" name="request" class="request-text" placeholder="suchen mit name, code...">
                 <button class="button"><span class="mif-search"></span></button>
             </div>
             <div class="input-control text cell colspan2" data-role="datepicker">
-                <input type="text" name="dateStart" placeholder="von:">
+                <input type="text" name="dateStart" class="request-date" placeholder="von:">
                 <button class="button"><span class="mif-calendar"></span></button>
             </div>    
             <div class="input-control text cell colspan2" data-role="datepicker">
-                <input type="text" name="dateEnd" placeholder="bis:">
+                <input type="text" name="dateEnd" class="request-date" placeholder="bis:">
                 <button class="button"><span class="mif-calendar"></span></button>
             </div>    
         </div>
@@ -38,7 +38,7 @@
                             {% for maincategory in maincategories %}
                                 <div class="cell">                                
                                     <label class="input-control radio">
-                                        <input type="radio" class="category-radio" position="0" name="category" value="{{ maincategory.id }}" {% if maincategory.id == null %}checked{% endif %}>
+                                        <input type="radio" class="category-radio request-radio" position="0" name="category" value="{{ maincategory.code }}" {% if maincategory.id == null %}checked{% endif %}>
                                         <span class="check"></span>
                                         <span class="caption">{{ maincategory.name }}</span>
                                     </label>
@@ -64,9 +64,9 @@
                                             </select>
                                         </div>
                                         <div class="input-control rows-select select multiple full-size" position='{{ i }}' style="height: 100px">
-                                            <select name="{{ 'select' ~ i }}" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
+                                            <select name="{{ 'subcategory' ~ i }}" class="request-select" data-validate-func="required" data-validate-hint="Please select a value!" data-validate-hint-position="left" multiple>
                                                 {% for subsubcategory in subsubcategories %}
-                                                    <option class="{{ subsubcategory.parent.name }}" value="{{ subsubcategory.id }}" {% if subsubcategory.id == null %}selected{% endif %}>{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
+                                                    <option class="{{ subsubcategory.parent.name }} {% if subsubcategory.id == null %}default-select{% endif %}" value="{{ subsubcategory.code }}" {% if subsubcategory.id == null %}selected{% endif %}>{{subsubcategory.code}}        {{ subsubcategory.name }}</option>
                                                 {% endfor %}
                                             </select>
                                             <span class="input-state-error mif-warming"></span>
@@ -85,9 +85,9 @@
                         <div class="row cells1">
                             <div class="cell">
                                 <div class="input-control header-select select full-size">
-                                    <select>
+                                    <select class="request-select" name="creator">
                                         {% for user in users %}
-                                            <option value="{{ user.id }}">{{ user.lastname }}</option>
+                                            <option value="{{ user.initial }}">{{ user.lastname }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -99,5 +99,26 @@
         </div>
         
     </form>
-</div>    
+</div>
+<div class="grid">
+    <div id="documents-list">
+        <div class="row cells1">
+            <div class="cell">
+                <h3>Vorhandene Dokumente</h3>
+            </div>
+        </div>
+        <div id="documents-table" data-url="{{ path('sw_doc_manager_view', { 'id': '-1' }) }}">
+        </div>
+    </div>
+</div>                             
+                                        
+{{ include("SWDocManagerBundle:Default:dialog_loading.html.twig") }}
+
+{% endblock %}
+{% block javascript %}{{ parent() }}
+    {% javascripts
+        '@SWDocManagerBundle/Resources/public/js/form.js'
+        '@SWDocManagerBundle/Resources/public/js/search.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

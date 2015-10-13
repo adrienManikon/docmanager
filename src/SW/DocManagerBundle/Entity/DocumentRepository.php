@@ -41,4 +41,61 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 ->getQuery()
                 ->getOneOrNullResult();
     }
+    
+    public function search($nameCode, $dateStart, $dateEnd, $code, $initials) {
+        
+        $queryBuilder = $this->createQueryBuilder('d');
+   
+        $queryBuilder->where('d.disabled = 1');
+        
+        if ($nameCode != null) {
+            $queryBuilder
+                ->andWhere('d.code LIKE :nameCode')
+                ->orWhere('d.name LIKE :nameCode')
+                ->setParameter('nameCode', '%' . $nameCode . '%');
+        }
+        
+        if ($code != null) {
+            $queryBuilder
+                ->andWhere('d.code LIKE :code')
+                ->setParameter('code', '%' . $code . '%');
+        }
+        
+        if ($dateStart != null && $dateEnd != null) {
+            
+            $queryBuilder
+                ->andWhere('d.date BETWEEN :dateStart AND :dateEnd')
+                ->setParameter('dateStart', $dateStart)
+                ->setParameter('dateEnd', $dateEnd);
+            
+        } else if ($dateStart != null) {
+            
+            $queryBuilder
+                ->andWhere('d.date > :dateStart')
+                ->setParameter('dateStart', $dateStart);
+
+            
+        }  else if ($dateEnd != null) {
+            
+            $queryBuilder
+                ->andWhere('d.date > :dateStart')
+                ->setParameter('dateStart', $dateStart);
+            
+        }
+        
+        if ($initials != null) {
+            
+            $queryBuilder
+                ->andWhere('d.date < :dateEnd')
+                ->setParameter('dateEnd', $dateEnd); 
+            
+        }
+        
+        $queryBuilder->setMaxResults(self::LIMIT_SEARCH);
+
+        return $queryBuilder
+                ->getQuery()
+                ->getResult();
+        
+    }
 }

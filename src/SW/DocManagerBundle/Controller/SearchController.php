@@ -11,6 +11,7 @@ namespace SW\DocManagerBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use SW\DocManagerBundle\Entity\Category;
 use SW\DocManagerBundle\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Description of SearchController
@@ -52,7 +53,43 @@ class SearchController extends AbstractController {
                 'users' => $users
             ));
             
+        } else {
+            
+            $nameCode = $request->request->get("request");
+            $dateStart =$request->request->get("dateStart");
+            $dateEnd =$request->request->get("dateEnd");
+            $code = $this->buildCode(array($request->request->get("category"),
+                    $request->request->get("subcategory1"),
+                    $request->request->get("subcategory2"),
+                    $request->request->get("subcategory3")));
+            $initial = $request->request->get("creator");
+            
+            $repoDocument = $this->getRepository("SWDocManagerBundle:Document");
+            
+            $documents = $repoDocument->search($nameCode,
+                    $dateStart,
+                    $dateEnd,
+                    $code,
+                    $initial);
+            $documentsJson = $this->encodeJson($documents);
+            
+            return new JsonResponse(array(
+                'documents' => json_decode($documentsJson)
+        ));
+            
+        }
+    }
+    
+    private function buildCode($codes) {
+        
+        $code = '';
+        foreach ($codes as $codeLetter) {
+            
+            if ($codeLetter != null)
+                $code .= $codeLetter;
+            
         }
         
+        return $code;
     }
 }

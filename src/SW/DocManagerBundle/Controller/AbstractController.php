@@ -99,4 +99,23 @@ class AbstractController extends Controller {
         }
         
     }
+    
+   protected function encodeJson($documents) {
+        
+        $array = array();
+        
+        foreach ($documents as $document) {
+            
+            $array[] = array(
+                "id" => $document->getId(),
+                "name" => $document->getName(),
+                "date" => $this->dateToString($document->getDate()),
+                "code" => $document->getCode(),
+                "creator" => $document->getCreator()->getInitial()                
+            );
+            
+        }
+        return json_encode($array);
+        
+    }
 }
