@@ -56,8 +56,8 @@ class SearchController extends AbstractController {
         } else {
             
             $nameCode = $request->request->get("request");
-            $dateStart =$request->request->get("dateStart");
-            $dateEnd =$request->request->get("dateEnd");
+            $dateStart = $request->request->get("dateStart");
+            $dateEnd = $request->request->get("dateEnd");
             $code = $this->buildCode(array($request->request->get("category"),
                     $request->request->get("subcategory1"),
                     $request->request->get("subcategory2"),
