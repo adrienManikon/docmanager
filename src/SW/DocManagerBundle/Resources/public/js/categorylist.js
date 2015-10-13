@@ -1,9 +1,7 @@
 var idcategories = [-1, -1, -1, -1];
 
 $(function(){
-    
-    var documentListDisplayed = false;    
-    
+        
     $(".select-tools").each(function(){
         
         $(".rows-select option", this).hide();
