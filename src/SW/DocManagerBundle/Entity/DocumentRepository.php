@@ -46,7 +46,9 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         
         $queryBuilder = $this->createQueryBuilder('d');
    
-        $queryBuilder->where('d.disabled = 1');
+        $queryBuilder
+                ->distinct()
+                ->where('d.disabled = 1');
         
         if ($nameCode != null) {
             $queryBuilder
