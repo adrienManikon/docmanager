@@ -40,3 +40,8 @@ sw_doc_manager_edit_post:
     requirements:
         force: true|false
         
+sw_doc_manager_delete:
+    path: /delete
+    defaults: { _controller: SWDocManagerBundle:Delete:delete }
+    requirements:
+        method:   POST

@@ -1,12 +1,10 @@
-function editDocument(id, name, date, code, creator){           
+var $idToDelete;
+function deleteDocument(id, name){           
     
-    $( "#edit-dialog-form input[name='id']" ).val(id);
-    $( "#edit-dialog-form input[name='name']" ).val(name);
-    $( "#edit-dialog-form input[name='date']" ).val(date);
-    $( "#edit-dialog-form input[name='code']" ).val(code);
-    $( "#edit-dialog-form input[name='creator']" ).val(creator);
+    $idToDelete = id;
+    $( "#name-delete" ).html(name);
     
-    showDialog("#edit-dialog");
+    showDialog("#delete-dialog");
     
 }
 
@@ -21,6 +19,43 @@ $("#edit-dialog-form").submit(function(event) {
     url = $form.attr( 'action' );
     
     sendForm($form, url, "#edit-dialog");
+});
+
+$("#confirmDelete").click(function(){
+    
+    url = $( this ).attr('data-url');
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+            id : $idToDelete
+        },
+        beforeSend: function() {
+            closeDialog("#delete-dialog");
+            showDialog("#dialog-loading");
+        },
+        success: function(response){
+            
+            console.log(response);
+            
+            closeDialog("#dialog-loading");
+            
+            if (response.status) {
+                
+                showDialog("#delete-dialog-success");
+                showList();
+                
+            } else {               
+                
+                $("#error-message").html(response.message);
+                showDialog("#deletedialog-error");
+                
+            }
+        },
+        dataType: "json"
+    });
+    
+    
 });
 
 $("#confirmOverride").click(function(){
@@ -39,12 +74,12 @@ function sendForm(form, url, dialog) {
         data: form.serialize(),
         beforeSend: function() {
             closeDialog(dialog);
-            showDialog("#dialog-loading");
+            showDialog("#edit-dialog-loading");
         },
         success: function(response){
             console.log(response);
             
-            closeDialog("#dialog-loading");
+            closeDialog("#edit-dialog-loading");
             
             if (response.status) {
                 

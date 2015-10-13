@@ -9,7 +9,6 @@
 namespace SW\DocManagerBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use SW\DocManagerBundle\Entity\Document;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

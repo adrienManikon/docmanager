@@ -95,6 +95,7 @@ function fillTable(documents) {
         $td += '<td>' + document.creator + '</td>';
         $td += '<td><span class="edit-document mif-pencil" onclick=\'editDocument(' + document.id + ', \"' + document.name + '\", \"' + document.date + '\", \"' + document.code + '\", \"' + document.creator + '\")\' data-id="' + document.id + '"></span></td>';
         $td += '<td><a target="_blank" href="' + $url + '/' + document.id + '"><span class="mif-search"></span></a></td>';
+        $td += '<td><span class="delete-document mif-bin" onclick=\'deleteDocument(' + document.id + ', \"' + document.name + '\")\' data-id="' + document.id + '"></span></td>';
         
         $newRow = $('<tr></tr>').append($td);
         

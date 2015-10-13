@@ -1,0 +1,36 @@
+<div data-role="dialog" id="delete-dialog" class="padding20 dialog grid" data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
+    
+    <h1>Delete Document</h1>
+        
+    <div class="row cells1">
+        <div class="cell">
+            <p>You are going to delete <i><span id="name-delete"></span></i>. Are you sure ?</p>
+        </div>
+    </div>
+
+    <div class="row cells12">
+        <div class="cell offset8 colspan2">
+            <button class="button" id="cancelDelete" onclick="closeDialog('#delete-dialog')">Cancel</button>
+        </div>
+        <div class="cell colspan2">
+            <button class="button square-button" id="confirmDelete" data-url="{{ path('sw_doc_manager_delete') }}">OK</button>
+        </div>
+    </div>
+    
+    
+    
+</div>          
+        
+<div data-role="dialog" id="delete-dialog-success" class="padding20 dialog success" data-close-button="true" data-type="success" data-overlay="true" data-overlay-color="op-dark">
+    <h1>Delete successfull</h1>
+    <p>
+        Your file has been well deleted.
+    </p>
+</div>
+        
+<div data-role="dialog" id="delete-dialog-error" class="padding20 dialog error" data-close-button="true" data-type="error" data-overlay="true" data-overlay-color="op-dark">
+    <h1>Error</h1>
+    <p>
+        <span id="error-message"></span>
+    </p>
+</div>         

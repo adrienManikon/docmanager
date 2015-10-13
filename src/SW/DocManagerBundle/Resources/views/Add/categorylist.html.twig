@@ -109,7 +109,9 @@
     </p>
 </div>
         
+{{ include("SWDocManagerBundle:Default:dialog_loading.html.twig") }}
 {{ include("SWDocManagerBundle:Edit:edit_dialog.html.twig") }}
+{{ include("SWDocManagerBundle:Delete:delete_dialog.html.twig") }}
 
 <span id="status" class="hidden">{{ status }}</span>
         
@@ -118,7 +120,8 @@
 {% block javascript %}{{ parent() }}
     {% javascripts
         '@SWDocManagerBundle/Resources/public/js/categorylist.js'
-        '@SWDocManagerBundle/Resources/public/js/edit.js'%}
+        '@SWDocManagerBundle/Resources/public/js/edit.js'
+        '@SWDocManagerBundle/Resources/public/js/delete.js' %}
       <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock %}
