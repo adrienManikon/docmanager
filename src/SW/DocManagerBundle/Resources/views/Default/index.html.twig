@@ -1,1 +1,28 @@
-Hello {{ name }}!
+{% extends "SWDocManagerBundle:Default:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+    
+    <div class="flex-grid">
+        <div class="row flex-just-center">
+            <a class="cell padding30 bg-cyan size2 icon-home" href="{{ path('sw_doc_manager_add') }}">
+                    <span class="mif-plus mif-4x fg-white"></span>
+                    <p>Neu</p>
+            </a>
+            <a class="cell padding30 bg-steel size2 icon-home">
+                <button class="noborder full-size" data-url="">
+                    <span class="mif-search mif-4x fg-white"></span>
+                    <p>Suchen</p>
+                </button>
+            </a>            
+        </div>
+    </div>
+    
+{% endblock %}
+{% block javascript %}{{ parent() }}
+    {% javascripts
+        '@SWDocManagerBundle/Resources/public/js/home.js'%}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

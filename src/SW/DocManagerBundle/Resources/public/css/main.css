@@ -94,3 +94,12 @@ table tr:nth-child(even) {
 .hidden {
     display: none;
 }
+
+.icon-home {
+    text-align: center;    
+}
+
+.icon-home p {
+    font-size: 2em;
+    color: white;
+}

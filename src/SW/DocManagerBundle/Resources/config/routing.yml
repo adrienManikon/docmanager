@@ -1,5 +1,5 @@
 sw_doc_manager_homepage:
-    path:     /hello/{name}
+    path:     /
     defaults: { _controller: SWDocManagerBundle:Default:index }
     
 sw_doc_manager_add:
