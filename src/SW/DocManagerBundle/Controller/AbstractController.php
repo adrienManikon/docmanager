@@ -10,6 +10,7 @@ namespace SW\DocManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use \SW\DocManagerBundle\Entity\UploadSession;
 
 use DateTime;
 
@@ -64,25 +65,36 @@ class AbstractController extends Controller {
     
    public function removeDocumentbyName($name) {
        
-       $repoUpload = $this->getRepository("SWDocManagerBundle:UploadSession");             
+        $repoUpload = $this->getRepository("SWDocManagerBundle:UploadSession");
         $repo = $this->getRepository("SWDocManagerBundle:Document");
-        $document = $repo->findOneByName($name);
+        $document = $repo->getOneByName($name);        
         
-        if ($document != null) {/*
-            $uploadSession = $repoUpload->findOneByDocumentRef($document);
-            $uploadSessions = $repoUpload->findByDocumentName($document);            
+        if ($document != null) {
+            
+            $uploadSession = $repoUpload->findOneByDocumentRef($document);            
             $em = $this->getDoctrine()->getManager();
-            if ($uploadSession != null)
-                $em->remove($uploadSession);
-            if ($uploadSessions != null)
-                foreach ($uploadSessions as $uploadSession) {
-                $em->remove($uploadSession);
+            if ($uploadSession != null) {
+                
+                foreach ($uploadSession->getDocuments() as $documentUp) {
+                    $documentUp->setUploadSession(null);
+                    $em->persist($documentUp);
                 }
-            $em->flush();  
-            $em->remove($document);*/
-            $em = $this->getDoctrine()->getManager();
-            $document->setDisabled(true);
-            $em->persist($document);
+                
+                $em->remove($uploadSession);
+            }
+            
+            
+            if ($document->getUploadSession() != null) {
+                
+                $upSession = $document->getUploadSession();
+                foreach ($upSession->getDocuments() as $documentUp) {
+                    $documentUp->setUploadSession(null);
+                    $em->persist($documentUp);
+                }
+                $em->remove($upSession);
+            }
+            
+            $em->remove($document);
             $em->flush();
         }
         

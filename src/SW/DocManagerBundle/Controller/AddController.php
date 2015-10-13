@@ -86,6 +86,7 @@ class AddController extends AbstractController
     public function uploadViewAction(Request $request, $id)
     {       
         $repositoryDocument = $this->getRepository("SWDocManagerBundle:Document");
+        $repositoryUploadSession = $this->getRepository("SWDocManagerBundle:UploadSession");
         
         $document = $repositoryDocument->find($id);
                 
@@ -97,24 +98,28 @@ class AddController extends AbstractController
         $document->setInitials($user->getInitial());
         $document->setCreator($user);
         $document->setNameAlreadyUsed(false);
-                 
-        $uploadSession = new UploadSession();
-        $uploadSession->getDocuments()->add($document);
-        $uploadSession->setDocumentRef($document);
+             
+        $uploadSession = $repositoryUploadSession->findOneByDocumentRef($document);
+        if ($uploadSession == null) {
+            $uploadSession = new UploadSession();
+            $uploadSession->getDocuments()->add($document);
+            $uploadSession->setDocumentRef($document);
+        }
         
         $alreadyExists = false;
         $form = $this->createForm(new UploadSessionType(), $uploadSession);
         
         if ($form->handleRequest($request)->isValid()) {
             
-            if (!$uploadSession->hasExistedNames())
+            if (!$uploadSession->hasExistedNames()) {
                 $uploadSession = $this->checkAvailabityNames($uploadSession);
-            else //User overrides
+                //We keep files in cache
+                $this->uploadDocuments(true, $uploadSession);
+                $uploadSession->updateDocuments();                               
+            } else //User overrides
                 $uploadSession->setExistedNames(false);
-            
-            //We keep files in cache
-            $this->uploadDocuments(true, $uploadSession);
-            $this->saveObject($uploadSession);
+                        
+            $this->saveObject($uploadSession); 
             
             if (!$uploadSession->hasExistedNames()) {
                 return $this->redirect($this->generateUrl('sw_doc_manager_recap', array(
@@ -141,10 +146,9 @@ class AddController extends AbstractController
         $formPublish->handleRequest($request);
         
         if ($formPublish->isValid()) {
-            $this->uploadDocuments(false, $uploadSession);                                
-            $parameter = array('status' => 'success');
+            $this->uploadDocuments(false, $uploadSession);
             
-            return $this->redirect($this->generateUrl('sw_doc_manager_add', $parameter));
+            return $this->redirect($this->generateUrl('sw_doc_manager_add', array('status' => 'success')));
         }
                                 
         return $this->render('SWDocManagerBundle:Add:recap.html.twig', array(
@@ -176,11 +180,17 @@ class AddController extends AbstractController
             
             $document->upload($temporary);
             
-            if (!$temporary)
+            if (!$temporary) {
                 $this->removeDocumentbyName($document->getName());
+                $document->setUploadSession(null);
+            }
             
             $em->persist($document);
             
+        }
+        
+        if (!$temporary) {
+            $em->remove($uploadSession);
         }
         
         $em->flush();
@@ -211,10 +221,9 @@ class AddController extends AbstractController
         $alreadyUsed = false;
         
         foreach ($documents as $document) {
-            if (!$alreadyUsed) {
-                $alreadyUsed = $repDocument->findOneByName($document->getName()) != null;
-            }
-            $document->setNameAlreadyUsed($repDocument->findOneByName($document->getName()) != null);
+            $documentExist = $repDocument->getOneByName($document->getName()) != null;
+            $alreadyUsed = !$alreadyUsed ? $documentExist : $alreadyUsed;
+            $document->setNameAlreadyUsed($documentExist);
         }
         
         $uploadSession->setExistedNames($alreadyUsed);

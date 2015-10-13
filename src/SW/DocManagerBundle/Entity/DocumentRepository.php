@@ -27,4 +27,18 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 ->getQuery()
                 ->getResult();
     }
+    
+    public function getOneByName($name) {
+        $queryBuilder = $this->createQueryBuilder('d');    
+        
+        $queryBuilder
+                ->where('d.name = :name')
+                ->andWhere('d.disabled = 1')
+                ->setParameter('name', $name)
+                ->getQuery();
+        
+        return $queryBuilder
+                ->getQuery()
+                ->getOneOrNullResult();
+    }
 }

@@ -23,18 +23,19 @@ class UploadSession
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Document")
-    * @ORM\JoinColumn(nullable=true)
+    * @ORM\OneToOne(targetEntity="SW\DocManagerBundle\Entity\Document", cascade={"persist"})
+     *@ORM\JoinColumn(nullable=true)
     */
     private $documentRef;
     
-  /**
-   * @ORM\ManyToMany(targetEntity="SW\DocManagerBundle\Entity\Document", cascade={"persist"})
-   */
+    /**
+     * @ORM\OneToMany(targetEntity="SW\DocManagerBundle\Entity\Document", mappedBy="uploadSession")
+     * @ORM\JoinColumn(nullable=true)
+     */
     private $documents;
-    
+   
     private $existedNames;
             
     public function __construct()
@@ -51,38 +52,6 @@ class UploadSession
     {
         return $this->id;
     }
-
-    /**
-     * Set documents
-     *
-     * @param array $documents
-     *
-     * @return UploadSession
-     */
-    public function setDocuments($documents)
-    {
-        $this->documents = $documents;
-
-        return $this;
-    }
-
-    /**
-     * Get documents
-     *
-     * @return array
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-    
-    public function getDocumentRef() {
-        return $this->documentRef;
-    }
-
-    public function setDocumentRef(Document $documentRef) {
-        $this->documentRef = $documentRef;
-    }
     
     public function hasExistedNames() {
         return $this->existedNames;
@@ -93,5 +62,83 @@ class UploadSession
     }
 
 
-}
+    /**
+     * Set documentRef
+     *
+     * @param \SW\DocManagerBundle\Entity\Document $documentRef
+     *
+     * @return UploadSession
+     */
+    public function setDocumentRef(\SW\DocManagerBundle\Entity\Document $documentRef = null)
+    {
+        $this->documentRef = $documentRef;
 
+        return $this;
+    }
+
+    /**
+     * Get documentRef
+     *
+     * @return \SW\DocManagerBundle\Entity\Document
+     */
+    public function getDocumentRef()
+    {
+        return $this->documentRef;
+    }
+
+
+    /**
+     * Add document
+     *
+     * @param \SW\DocManagerBundle\Entity\Document $document
+     *
+     * @return UploadSession
+     */
+    public function addDocument(\SW\DocManagerBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+        $document->setUploadSession($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \SW\DocManagerBundle\Entity\Document $document
+     */
+    public function removeDocument(\SW\DocManagerBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+        $document->setUploadSession(null);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+    
+    /**
+     * Set documents
+     *
+     * @return UploadSession
+     */
+    public function setDocuments(\Doctrine\Common\Collections\Collection $documents)
+    {
+        $this->documents = $documents;
+        return $this;
+    }    
+    
+    public function updateDocuments()
+    {
+        foreach ($this->documents as $document) {
+            $document->setUploadSession($this);
+        }
+        return $this;
+    }
+}

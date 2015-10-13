@@ -102,6 +102,12 @@ class Document
      */
     private $disabled;
     
+    /**
+    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\UploadSession", inversedBy="documents")
+    * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+    */
+    private $uploadSession;
+
     private $nameAlreadyUsed;
     
     public function __construct() {
@@ -487,4 +493,28 @@ class Document
     }
 
 
+
+    /**
+     * Set uploadSession
+     *
+     * @param \SW\DocManagerBundle\Entity\UploadSession $uploadSession
+     *
+     * @return Document
+     */
+    public function setUploadSession(\SW\DocManagerBundle\Entity\UploadSession $uploadSession = null)
+    {
+        $this->uploadSession = $uploadSession;
+
+        return $this;
+    }
+
+    /**
+     * Get uploadSession
+     *
+     * @return \SW\DocManagerBundle\Entity\UploadSession
+     */
+    public function getUploadSession()
+    {
+        return $this->uploadSession;
+    }
 }
