@@ -88,8 +88,8 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         if ($initials != null) {
             
             $queryBuilder
-                ->andWhere('d.date < :dateEnd')
-                ->setParameter('dateEnd', $dateEnd); 
+                ->andWhere('d.initials = :initials')
+                ->setParameter('initials', $initials); 
             
         }
         
