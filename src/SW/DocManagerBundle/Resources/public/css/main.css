@@ -102,6 +102,10 @@ table tr:nth-child(even) {
     color: white;
 }
 
+a {
+    color: inherit !important;
+}
+
 @media screen and (max-width: 767px) {
     table {
         width: 100% !important;
