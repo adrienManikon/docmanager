@@ -47,8 +47,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->createQueryBuilder('d');
    
         $queryBuilder
-                ->distinct()
-                ->where('d.disabled = 1');
+                ->distinct();
         
         if ($nameCode != null) {
             $queryBuilder
@@ -93,6 +92,8 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             
         }
         
+        $queryBuilder
+                ->andWhere('d.disabled = 1');
         $count = $queryBuilder
                 ->select('COUNT(d)')
                 ->getQuery()
