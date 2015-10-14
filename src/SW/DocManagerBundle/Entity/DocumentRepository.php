@@ -42,7 +42,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
                 ->getOneOrNullResult();
     }
     
-    public function search($nameCode, $dateStart, $dateEnd, $code, $initials) {
+    public function search($nameCode, $dateStart, $dateEnd, $code, $initials, $firstResult = 0) {
         
         $queryBuilder = $this->createQueryBuilder('d');
    
@@ -93,11 +93,33 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
             
         }
         
+        $count = $queryBuilder
+                ->select('COUNT(d)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        $queryBuilder->select('d');
+        $queryBuilder->setFirstResult($firstResult);
         $queryBuilder->setMaxResults(self::LIMIT_SEARCH);
-
-        return $queryBuilder
+        
+        $documents = $queryBuilder
                 ->getQuery()
                 ->getResult();
+        $results = array(
+            'count' => $count,
+            'documents' => $documents
+        );
+
+        return $results;
         
+    }
+    
+    public static function nbFirstResult($page) {
+        $page = $page == "0" ? 1 : $page;
+        return self::LIMIT_SEARCH * ($page - 1);
+        
+    }
+    
+    public static function getNbPages($total) {
+        return ceil( $total / self::LIMIT_SEARCH );
     }
 }

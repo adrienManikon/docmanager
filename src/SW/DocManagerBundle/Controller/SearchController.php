@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use SW\DocManagerBundle\Entity\Category;
 use SW\DocManagerBundle\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use SW\DocManagerBundle\Entity\DocumentRepository;
 
 /**
  * Description of SearchController
@@ -63,18 +64,24 @@ class SearchController extends AbstractController {
                     $request->request->get("subcategory2"),
                     $request->request->get("subcategory3")));
             $initial = $request->request->get("creator");
+            $page = $request->request->get('page') != null ? $request->request->get('page') : 1;
             
             $repoDocument = $this->getRepository("SWDocManagerBundle:Document");
             
-            $documents = $repoDocument->search($nameCode,
+            $results = $repoDocument->search($nameCode,
                     $dateStart,
                     $dateEnd,
                     $code,
-                    $initial);
-            $documentsJson = $this->encodeJson($documents);
+                    $initial,
+                    DocumentRepository::nbFirstResult($page));
+
+            $documentsJson = $this->encodeJson($results['documents']);
+            $nbPage = DocumentRepository::getNbPages($results['count']);
             
             return new JsonResponse(array(
-                'documents' => json_decode($documentsJson)
+                'documents' => json_decode($documentsJson),
+                'pages' => $nbPage,
+                'pageCurrent' => $page
         ));
             
         }
