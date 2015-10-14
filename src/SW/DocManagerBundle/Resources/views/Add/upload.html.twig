@@ -45,12 +45,18 @@
                         {{ form_widget(document.code) }}
                         </div>
                     </div>
-                    <div class="cell colspan5">
+                    <div class="cell colspan4">
                         {{ form_widget(document.nameAlreadyUsed) }}
                         <div class="input-control text full-size {% if document.vars.value.nameAlreadyUsed %}block-shadow-error{% endif %}">
                             {{ form_widget(document.name) }}
                         </div>                
                     </div>
+                    <div class="cell colspan1">
+                        {{ form_widget(document.nameAlreadyUsed) }}
+                        <div class="input-control text full-size {% if document.vars.value.nameAlreadyUsed %}block-shadow-error{% endif %}">
+                            {{ form_widget(document.format, {'attr':{'class' :  'input-format'} }) }}
+                        </div>                
+                    </div>                        
                     <div class="cell colspan2">
                         <div class="input-control text full-size">
                             {{ form_widget(document.date) }}

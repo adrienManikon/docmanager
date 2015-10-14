@@ -36,6 +36,13 @@ $("#confirmOverride").click(function(){
 
 function changeInputFile(element) {
     
+    var lineInput = $(element).parent().parent().parent();
+    var filename = $(element).val();
+    var n = filename.lastIndexOf('.');
+    var format = filename.substring(n + 1);
+    
+    $('.input-format', lineInput).val(format);
+    
     $(element).parent().addClass("bg-green");
     $(element).parent().removeClass("bg-gray");
 }

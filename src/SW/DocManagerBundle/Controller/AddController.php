@@ -91,7 +91,7 @@ class AddController extends AbstractController
         $repositoryUser = $this->getRepository('SWDocManagerBundle:User');
         
         $user = $repositoryUser->findByLastname('Manikon')[0];
-        $document->setName("test.pdf");
+        $document->setName("test");
         $document->setInitials($user->getInitial());
         $document->setCreator($user);
         $document->setNameAlreadyUsed(false);

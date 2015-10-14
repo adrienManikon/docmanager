@@ -109,6 +109,7 @@ class AbstractController extends Controller {
             $array[] = array(
                 "id" => $document->getId(),
                 "name" => $document->getName(),
+                "format" => $document->getFormat(),
                 "date" => $this->dateToString($document->getDate()),
                 "code" => $document->getCode(),
                 "creator" => $document->getCreator()->getInitial()                

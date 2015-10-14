@@ -83,9 +83,10 @@ class Document
     private $creator;
     
     /**
-    * @ORM\ManyToOne(targetEntity="SW\DocManagerBundle\Entity\Format")
-    * @ORM\JoinColumn(nullable=true)
-    */
+     * @var string
+     *
+     * @ORM\Column(name="format", type="string", length=255, nullable=true)
+     */
     private $format;
     
         /**
@@ -319,7 +320,7 @@ class Document
     }
         
     public function getFormat() {
-        return $this->format;
+        return $this->format == null ? '' : $this->format;
     }
 
     public function setFormat($format) {

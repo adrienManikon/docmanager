@@ -35,10 +35,16 @@ class DocumentType extends AbstractType
             ->add('name', 'text', array(
                 'attr'=> array('placeholder'=>'Dateiname')
             ))
+            ->add('format', 'text', array(
+                'attr'=> array('readonly'=>'readonly')
+            ))                
             ->add($builder->create('date', 'text', array(
-                'attr'=> array('placeholder'=>'Initialen')
-            ))
-                ->addViewTransformer(new DateTimeToStringTransformer(null, null, 'd.m.Y')))                
+                'attr'=> array(
+                    'placeholder'=>'Initialen',
+                    'readonly' => 'readonly'
+                    )
+            ))                
+                ->addViewTransformer(new DateTimeToStringTransformer(null, null, 'd.m.Y')))                 
             ->add('initials', 'text', array(
                 'required'=> false,
                 'attr'=> array('readonly'=>'readonly')
