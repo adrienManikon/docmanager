@@ -68,12 +68,16 @@ class SearchController extends AbstractController {
             
             $repoDocument = $this->getRepository("SWDocManagerBundle:Document");
             
-            $results = $repoDocument->search($nameCode,
-                    $dateStart,
-                    $dateEnd,
-                    $code,
-                    $initial,
-                    DocumentRepository::nbFirstResult($page));
+            if ($nameCode != null || $dateStart != null || $dateEnd != null || $code != null || $initial != null) {
+                $results = $repoDocument->search($nameCode,
+                        $dateStart,
+                        $dateEnd,
+                        $code,
+                        $initial,
+                        DocumentRepository::nbFirstResult($page));
+            } else {
+                $results = array('count' => 0, 'documents' => array());
+            }
 
             $documentsJson = $this->encodeJson($results['documents']);
             $nbPage = DocumentRepository::getNbPages($results['count']);
