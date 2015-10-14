@@ -40,7 +40,7 @@ class AddController extends AbstractController
             $subCategories[] = $repository->find($request->request->get("select2"));
             $subCategories[] = $repository->find($request->request->get("select3"));
             
-            $document->setDate(new DateTime("2012-07-08"));
+            $document->setDate(new DateTime('NOW'));
             $document->setCategory($category);
             $document->generateCode($subCategories);
             $document->setSubCategories($this->array_unique_categories($subCategories));
@@ -91,7 +91,6 @@ class AddController extends AbstractController
         $repositoryUser = $this->getRepository('SWDocManagerBundle:User');
         
         $user = $repositoryUser->findByLastname('Manikon')[0];
-        $document->setName("test");
         $document->setInitials($user->getInitial());
         $document->setCreator($user);
         $document->setNameAlreadyUsed(false);
