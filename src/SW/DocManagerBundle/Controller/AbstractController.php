@@ -112,11 +112,38 @@ class AbstractController extends Controller {
                 "format" => $document->getFormat(),
                 "date" => $this->dateToString($document->getDate()),
                 "code" => $document->getCode(),
-                "creator" => $document->getCreator()->getInitial()                
+                "creator" => $document->getCreator()->getInitial(),
+                "thumbs" => $this->getThumbs($document->getFormat())
             );
             
         }
         return json_encode($array);
+        
+    }
+    
+    protected function getThumbs($format) {
+        
+        if ($format == "pdf") {
+            return "mif-file-pdf";
+        }
+        
+        if ($format == "zip") {
+            return "mif-file-archive";
+        }
+        
+        if ($format == "doc" || $format == "xdoc") {
+            return "mif-file-word";
+        }
+        
+        if ($format == "xls") {
+            return "mif-file-excel";
+        }        
+        
+        if ($format == "jpeg" || $format == "jpg") {
+            return "mif-file-image";
+        }
+        
+        return "mif-file-pdf";
         
     }
 }

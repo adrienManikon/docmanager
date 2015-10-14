@@ -25,7 +25,7 @@ function fillTable(documents) {
     
     documents.forEach(function(document){
         //var format = document.format === undefined ? '' : document.format;       
-        var $td = '<td class="cell"><span class="mif-file-pdf"></span> ' + document.name + '.' + document.format + '</td>';
+        var $td = '<td class="cell"><span class="'+document.thumbs+'"></span> ' + document.name + '.' + document.format + '</td>';
         $td += '<td class="cell">' + document.date + '</td>';
         $td += '<td class="cell">' + document.code + '</td>';
         $td += '<td class="cell">' + document.creator + '</td>';
