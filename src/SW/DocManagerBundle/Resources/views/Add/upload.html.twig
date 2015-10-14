@@ -65,7 +65,7 @@
                         <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
                             {% if alreadyExists == false %}
                                 Datei
-                                {{ form_widget(document.file) }}
+                                {{ form_widget(document.file, { 'attr':{'onchange':'changeInputFile(this)'} }) }}
                             {% else %}
                                 Datei
                                 {{ form_widget(document.file,  { 'attr':{'disable':'disable', 'required': 'false'} }) }}

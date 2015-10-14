@@ -34,6 +34,12 @@ $("#confirmOverride").click(function(){
     
 });
 
+function changeInputFile(element) {
+    
+    $(element).parent().addClass("bg-green");
+    $(element).parent().removeClass("bg-gray");
+}
+
 function addTagForm($collectionHolder) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
@@ -53,10 +59,10 @@ function addTagForm($collectionHolder) {
     var newBlock =$('<div class="row cells12 fileInput"></div>');
     
     $('input', $newFormLi).each(function(index, element){
-        
+                
         var name = element.name;
         var $block = $('<div class="input-control text full-size"></div>').append(element);
-        
+               
         if (contains(name, 'category') || contains(name, 'creator') || contains(name, 'nameAlreadyUsed'))
             return;
         
@@ -74,6 +80,7 @@ function addTagForm($collectionHolder) {
         } else if (contains(name, 'name')) {
             $block = $('<div class="cell colspan5"></div>').append($block);
         } else if (contains(name, 'file')) {
+            $('input', $block).attr("onchange",'changeInputFile(this)');
             $block = $('<div class="input-control full-size input-file-custom button full-size bg-gray fg-white">Datei</div>').append(element);
             $block = $('<div class="cell colspan1"></div>').append($block);
         } else {
