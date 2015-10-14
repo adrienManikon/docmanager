@@ -1,9 +1,13 @@
 <div class="row cells1">
     <div class="cell" id="categoriesline">
-        {% set document = form.documents[0] %}
-        <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(document.category.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
-        {% for subcategory in document.subCategories %}
-            <span class="categoryBlock padding10 bg-grayLighter">{{ form_widget(subcategory.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
-        {% endfor %}
+        <div class="grid">
+            <div class="row colspan1 cells{{ form.documents[0].subCategories|length + 1 }}">
+                {% set document = form.documents[0] %}
+                <span class="cell categoryBlock padding10 bg-grayLighter">{{ form_widget(document.category.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
+                {% for subcategory in document.subCategories %}
+                    <span class="colspan1 cell categoryBlock padding10 bg-grayLighter">{{ form_widget(subcategory.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</span>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div> 

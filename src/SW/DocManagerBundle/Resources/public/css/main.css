@@ -53,8 +53,6 @@ table tr:nth-child(even) {
 }
 
 #categoriesline {
-    display: flex;
-    justify-content: space-between;
     position: relative;
     z-index: 1;
 }
@@ -102,4 +100,32 @@ table tr:nth-child(even) {
 .icon-home p {
     font-size: 2em;
     color: white;
+}
+
+@media screen and (max-width: 767px) {
+    table {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        overflow-y: hidden !important;
+        -ms-overflow-style: -ms-autohiding-scrollbar !important;
+        border: 1px solid #ddd !important;
+    }
+
+    table > tbody > tr > .cell, table > thead > tr  >th {
+        width: initial !important;
+        
+    }
+    
+    table > tbody > tr > .cell {
+        margin-left: 10px !important;
+    }
+    
+    table > tbody > tr, table > thead > tr  {
+        width: initial !important;
+        
+    }   
+    
+    table > tbody > .cells4 > .cell {
+        width: 20% !important;
+    }
 }

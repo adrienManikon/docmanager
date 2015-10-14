@@ -5,7 +5,7 @@
 {% block body %}
 <div class="grid" id="header-document">
     <div class="row cells3">
-        <div class="cell padding20 bg-cyan">
+        <div class="cell padding20 bg-cyan no-phone no-tablet">
             <div class="flex-grid">
                 <div class="row cells2">
                     <div class="cell colspan2"><span class="number number-blue">1</span></div><div class="cell colspan4"><h3>Kategorien</h3></div>                    
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="cell padding20 bg-cyan">
+        <div class="cell padding20 bg-cyan no-phone no-tablet">
             <div class="flex-grid">
                 <div class="row cells2">
                     <div class="cell colspan2"><span class="number number-blue">2</span></div><div class="cell colspan4"><h3>Dokument</h3></div>                    
@@ -24,7 +24,7 @@
         <div class="cell padding20 bg-cyan">
             <div class="flex-grid">
                 <div class="row cells2">
-                    <div class="cell colspan2"><span class="number number-blue">3</span></div><div class="cell colspan4"><h3>Veröffentlichen</h3></div>                    
+                    <div class="cell colspan2"><span class="number number-blue  no-phone no-tablet">3</span></div><div class="cell colspan4"><h3>Veröffentlichen</h3></div>                    
                 </div>
             </div>
         </div>
@@ -37,24 +37,28 @@
     
         {{ include("SWDocManagerBundle:Add:categorylines.html.twig") }}
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="sortable-column sort-desc">Name</th>
-                    <th class="sortable-column sort-desc">Datum</th>
-                    <th class="sortable-column">Bezeichnung</th>
-                    <th class="sortable-column">Von</th>
-                </tr>
-            </thead>
-            {% for document in form.documents %}
-                <tr>
-                    <td><span class="mif-file-pdf"></span>{{ form_widget(document.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
-                    <td>{{ form_widget(document.date, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
-                    <td>{{ form_widget(document.code, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
-                    <td>{{ form_widget(document.creator.lastname, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
-                </tr>
-            {% endfor %}         
-        </table>
+        <div class="row">
+            <div class="grid">
+                <table class="table">
+                    <thead>
+                        <tr class="row cells4">
+                            <th class="cell sortable-column sort-desc">Name</th>
+                            <th class="cell sortable-column sort-desc">Datum</th>
+                            <th class="cell sortable-column">Bezeichnung</th>
+                            <th class="cell sortable-column">Von</th>
+                        </tr>
+                    </thead>
+                    {% for document in form.documents %}
+                        <tr class="row cells4">
+                            <td class="cell"><span class="mif-file-pdf"></span>{{ form_widget(document.name, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                            <td class="cell">{{ form_widget(document.date, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                            <td class="cell">{{ form_widget(document.code, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                            <td class="cell">{{ form_widget(document.creator.lastname, {'attr':{'class':'noborder','readonly':'readonly'} }) }}</td>
+                        </tr>
+                    {% endfor %}         
+                </table>
+            </div>
+        </div>
 
         <div class="row cells12">
             <div class="cell offset8 colspan4">
