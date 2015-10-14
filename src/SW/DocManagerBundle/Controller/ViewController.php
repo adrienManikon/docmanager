@@ -22,11 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController {
     
-    public function RenderAction($id) {
-        
-        $repDocument = $this->getRepository('SWDocManagerBundle:Document');
-        
-        $document = $repDocument->find($id);
+    public function RenderAction(\SW\DocManagerBundle\Entity\Document $document) {
+                
         $path = $document->getFilePath();
         
         $response = new BinaryFileResponse($path);

@@ -83,13 +83,10 @@ class AddController extends AbstractController
         
     }
     
-    public function uploadViewAction(Request $request, $id)
+    public function uploadViewAction(Request $request, Document $document)
     {       
-        $repositoryDocument = $this->getRepository("SWDocManagerBundle:Document");
         $repositoryUploadSession = $this->getRepository("SWDocManagerBundle:UploadSession");
-        
-        $document = $repositoryDocument->find($id);
-                
+                        
         /* TEST */
         $repositoryUser = $this->getRepository('SWDocManagerBundle:User');
         
@@ -137,10 +134,8 @@ class AddController extends AbstractController
         ));
     }
             
-    public function recapAction(Request $request, $id)
+    public function recapAction(Request $request, UploadSession $uploadSession)
     {   
-        $repository = $this->getRepository("SWDocManagerBundle:UploadSession");
-        $uploadSession = $repository->find($id);
         
         $formPublish = $this->getFormPublish($uploadSession);
         $formPublish->handleRequest($request);
