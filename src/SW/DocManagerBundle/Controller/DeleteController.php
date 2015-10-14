@@ -35,9 +35,10 @@ class DeleteController extends AbstractController {
                     $em = $this->getDoctrine()->getManager();
                     $uploadSession = $this->getRepository("SWDocManagerBundle:UploadSession")
                             ->findOneByDocumentRef($document);
-                    
+
                     if ($uploadSession != null) {
                         $em->remove($uploadSession);
+                        $em->flush();
                     }
                     
                     $em->remove($document);

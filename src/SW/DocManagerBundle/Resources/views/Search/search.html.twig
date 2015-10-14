@@ -129,13 +129,18 @@
     </div>
 </div>                             
                                         
+{{ include("SWDocManagerBundle:Default:commun.html.twig") }}                
 {{ include("SWDocManagerBundle:Default:dialog_loading.html.twig") }}
+{{ include("SWDocManagerBundle:Edit:edit_dialog.html.twig") }}
+{{ include("SWDocManagerBundle:Delete:delete_dialog.html.twig") }}
 
 {% endblock %}
 {% block javascript %}{{ parent() }}
     {% javascripts
         '@SWDocManagerBundle/Resources/public/js/form.js'
-        '@SWDocManagerBundle/Resources/public/js/search.js' %}
+        '@SWDocManagerBundle/Resources/public/js/search.js'
+        '@SWDocManagerBundle/Resources/public/js/edit.js'
+        '@SWDocManagerBundle/Resources/public/js/delete.js' %}
       <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
