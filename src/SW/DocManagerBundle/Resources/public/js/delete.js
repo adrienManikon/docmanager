@@ -8,19 +8,6 @@ function deleteDocument(id, name){
     
 }
 
-/* attach a submit handler to the form */
-$("#edit-dialog-form").submit(function(event) {
-    
-    /* stop form from submitting normally */
-    event.preventDefault();
-
-    /* get some values from elements on the page: */
-    var $form = $( this ),
-    url = $form.attr( 'action' );
-    
-    sendForm($form, url, "#edit-dialog");
-});
-
 $("#confirmDelete").click(function(){
     
     url = $( this ).attr('data-url');

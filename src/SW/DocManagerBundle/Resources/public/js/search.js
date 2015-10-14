@@ -73,6 +73,10 @@ function sendRequest(page) {
     });    
 }
 
+function showList() {
+    sendRequest();
+}
+
 function fillPagination(pages, pageCurrent) {
         
     var block = $("#results-pages");
