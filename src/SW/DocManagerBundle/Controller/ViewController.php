@@ -24,7 +24,7 @@ class ViewController extends AbstractController {
     
     public function RenderAction(\SW\DocManagerBundle\Entity\Document $document) {
                 
-        $path = $document->getFilePath();
+        $path = $document->getPath();
         
         $response = new BinaryFileResponse($path);
         $response->trustXSendfileTypeHeader();

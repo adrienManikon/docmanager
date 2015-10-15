@@ -10,8 +10,8 @@ namespace SW\DocManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use \SW\DocManagerBundle\Entity\UploadSession;
-
+use SW\DocManagerBundle\Entity\Document;
+use Symfony\Component\HttpFoundation\File\File;
 use DateTime;
 
 /**
@@ -145,5 +145,74 @@ class AbstractController extends Controller {
         
         return "mif-file-pdf";
         
+    }
+    
+    protected function upload($temporary, Document $document) {
+        
+        if ($temporary) {
+            
+            $file = $document->getFile();
+                        
+            if (null === $document->getFile()) {
+                return;
+            }
+            
+            
+            //$this->creator = $this->file->getClientOriginalName();
+            $file = $file->move($this->getUploadTempDir(), $file->getFilename());
+            
+            $document->setFile($file);
+            $document->setPath($this->getUploadTempDir() . '/' . $file->getFilename());
+            $document->setAlt($document->getCode());
+            
+        } else {
+            
+            $file = new File($document->getPath());
+            
+            if (null === $file)
+                return;
+            
+            $file = $file->move($this->getUploadRootDir(), $document->getName());
+            $document->setPath($this->getUploadRootDir() . '/' . $file->getFilename());
+        }
+        
+        return $document;
+        
+    }
+    
+    protected function renameFile(Document $document, $newname)
+    {
+        
+        $file = new File($document->getPath());
+
+        if (null === $file)
+            return;
+        
+        $file->move($this->getUploadRootDir(), $newname);     
+        $document->setName($newname);
+        $document->setPath($this->getUploadRootDir() . '/' . $newname);
+        
+        return $document;
+        
+    }
+    
+    protected function getUploadDir()
+    {
+        return 'uploads/document';
+    }
+    
+    protected function getUploadTempDir()
+    {
+        return 'uploads/temp';
+    }
+    
+    protected function getUploadRootDir()
+    {
+        return $this->get('kernel')->getRootDir() .'/../web/'. $this->getUploadDir();
+    }
+    
+    protected function getUploadRootTempDir()
+    {
+        return $this->get('kernel')->getRootDir() .'/../web/' . $this->getUploadTempDir();
     }
 }

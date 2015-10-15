@@ -60,7 +60,7 @@ class EditController extends AbstractController {
                             
                         }else {
                                                         
-                            $document->renameFile($name);
+                            $document = $this->renameFile($document, $name);
                             $document->setName($name);
                             $this->replaceDocument($documentSameName, $document);
                             
@@ -71,7 +71,7 @@ class EditController extends AbstractController {
                         
                     } else {
                     
-                        $document->renameFile($name);
+                        $document = $this->renameFile($document, $name);
                         $document->setName($name);                                       
                         $this->saveObject($document);
 

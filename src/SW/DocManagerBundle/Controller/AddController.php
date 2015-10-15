@@ -172,7 +172,7 @@ class AddController extends AbstractController
             $document->setCreator($documentRef->getCreator());
             $document->setDisabled(!$temporary);
             
-            $document->upload($temporary);
+            $document = $this->upload($temporary, $document);
             
             if (!$temporary) {
                 $this->removeDocumentbyName($document->getName());

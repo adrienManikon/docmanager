@@ -4,7 +4,6 @@ namespace SW\DocManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -233,7 +232,7 @@ class Document
      *
      * @return Document
      */
-    public function setFile(UploadedFile $file)
+    public function setFile($file)
     {
         $this->file = $file;
 
@@ -327,75 +326,7 @@ class Document
         $this->format = $format;
         return $this;
     }
-
-    public function upload($temporary)
-    {
-        if ($temporary) {
             
-            if (null === $this->file) {
-                return;
-            }
-            //$this->creator = $this->file->getClientOriginalName();
-            $this->file = $this->file->move($this->getUploadTempDir(), $this->file->getFilename());
-            $this->path = $this->file->getFilename();
-            $this->alt = $this->code;
-            
-        } else {
-            
-            $file = new File($this->getUploadTempDir() . '/' . $this->path);
-            
-            if (null === $file)
-                return;
-            
-            $file->move($this->getUploadRootDir(), $this->name);
-            $this->path = $this->getUploadRootDir() . '/' . $this->name;
-        }
-        
-        return $this;
-
-    }
-    
-    public function renameFile($newname)
-    {
-        
-        $file = new File($this->getFilePath());
-
-        if (null === $file)
-            return;
-        
-        $file->move($this->getUploadRootDir(), $newname);        
-        $this->name = $newname;
-        $this->path = $this->getUploadRootDir() . '/' . $newname;
-        
-        return $this;
-        
-    }
-    
-    public function getFilePath()
-    {
-        return $this->getUploadRootDir() . '/' . $this->name;
-    }
-
-    public function getUploadDir()
-    {
-        return 'uploads/document';
-    }
-    
-    public function getUploadTempDir()
-    {
-        return 'uploads/temp';
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-    
-    protected function getUploadRootTempDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadTempDir();
-    }
-    
     public function generateCode($categories = null)
     {
         $this->code = '';
