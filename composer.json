@@ -2,6 +2,7 @@
     "name": "adrien.manikon/docmanager",
     "license": "proprietary",
     "type": "project",
+    "description": "Documents Manager for Swiss Windows",
     "autoload": {
         "psr-4": {
             "": "src/"
