@@ -59,12 +59,13 @@ class ViewController extends AbstractController {
             
             $documents = $repDoc->getByCode($code);
             $documentsJson = $this->encodeJson($documents);
+            
             return new JsonResponse(array(
                 'code' => $code,
                 'documents' => json_decode($documentsJson)
                     ));
-    }
+        }
 
-        return new Response('This is not ajax!', 400);
+        return $this->redirect($this->generateUrl('sw_doc_manager_homepage'));
     }    
 }
