@@ -89,7 +89,7 @@ class EditController extends AbstractController {
         
     }
 
-    public function returnJsonResponse($status, $message, $alreadyExists) {
+    private function returnJsonResponse($status, $message, $alreadyExists) {
         
         return new JsonResponse(array(
             'status' => $status,

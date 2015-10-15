@@ -69,7 +69,7 @@ class AddController extends AbstractController
             ));
     }
     
-    public function buildSubCategories($subsubcategories) {
+    protected function buildSubCategories($subsubcategories) {
         
         $subCategories = array();
         
@@ -160,7 +160,7 @@ class AddController extends AbstractController
             ->getForm();
     }
         
-    public function uploadDocuments($temporary, UploadSession $uploadSession) {
+    protected function uploadDocuments($temporary, UploadSession $uploadSession) {
         
         $em = $this->getDoctrine()->getManager();
         $documentRef = $uploadSession->getDocumentRef();
@@ -191,7 +191,7 @@ class AddController extends AbstractController
         
     }
    
-    public function array_unique_categories($array) {
+    protected function array_unique_categories($array) {
         
         $ids = array();
         $arrayUnique = array();
@@ -208,7 +208,7 @@ class AddController extends AbstractController
         
     }    
     
-    public function checkAvailabityNames(UploadSession $uploadSession) {
+    protected function checkAvailabityNames(UploadSession $uploadSession) {
         
         $documents = $uploadSession->getDocuments();
         $repDocument = $this->getRepository("SWDocManagerBundle:Document");

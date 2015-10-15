@@ -21,12 +21,12 @@ use DateTime;
  */
 class AbstractController extends Controller {
     
-    public function dateToString(DateTime $date) {
+    protected function dateToString(DateTime $date) {
         $dateService = $this->container->get('sw_doc_manager.date_service');
         return $dateService->dateToString($date);
     }
     
-    public function stringToDate($date) {
+    protected function stringToDate($date) {
         $dateService = $this->container->get('sw_doc_manager.date_service');
         return $dateService->stringToDate($date);
     }
@@ -50,11 +50,11 @@ class AbstractController extends Controller {
      * 
      * @return boolean
      */
-    public function isMethodPost(Request $request) {
+    protected function isMethodPost(Request $request) {
         return $request->isMethod("POST");
     }
     
-    public function replaceDocument($oldDocument, $document) {
+    protected function replaceDocument($oldDocument, $document) {
         
         $em = $this->getDoctrine()->getManager();
         $em->remove($oldDocument);
@@ -63,7 +63,7 @@ class AbstractController extends Controller {
         
     }
     
-   public function removeDocumentbyName($name) {
+   protected function removeDocumentbyName($name) {
        
         $repoUpload = $this->getRepository("SWDocManagerBundle:UploadSession");
         $repo = $this->getRepository("SWDocManagerBundle:Document");
