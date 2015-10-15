@@ -77,22 +77,3 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-doctrine_phpcr:
-    odm:
-        auto_mapping: true
-        auto_generate_proxy_classes: "%kernel.debug%"
-    session:
-        backend:
-            type: doctrinedbal
-            # requires DoctrineCacheBundle
-            # caches:
-            #     meta: doctrine_cache.providers.phpcr_meta
-            #     nodes: doctrine_cache.providers.phpcr_nodes
-            # enable logging
-            logging: true
-            # enable profiling in the debug toolbar.
-            profiling: true
-        workspace: default
-        username: admin
-        password: admin
