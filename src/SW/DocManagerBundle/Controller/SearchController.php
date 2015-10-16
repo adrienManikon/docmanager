@@ -120,7 +120,7 @@ class SearchController extends AbstractController {
         
     }
     
-    public function prepareDataForRender($mainCategories, $subCategories, $subsubcategories, $users) {
+    private function prepareDataForRender($mainCategories, $subCategories, $subsubcategories, $users) {
         
         $noneCategory = new Category();
         $noneCategory->setName("Keine");
