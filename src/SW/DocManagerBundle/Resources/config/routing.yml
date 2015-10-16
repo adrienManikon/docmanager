@@ -21,11 +21,7 @@ sw_doc_manager_recap:
         _controller: SWDocManagerBundle:Add:recap
     requirements: 
         id: \d+
-        
-sw_doc_manager_publish:
-    path:     /publish
-    defaults: { _controller: SWDocManagerBundle:Add:publish }
-    
+            
 sw_doc_manager_list_ajax:
     path:   /list
     defaults: { _controller: SWDocManagerBundle:View:list }
