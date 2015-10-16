@@ -1,0 +1,135 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5 oct. 2015, 13:36:35
+    Author     : adrien.manikon
+*/
+
+#header-document {
+    color: white;
+}
+
+#header-document h3 {
+    text-transform: uppercase;
+}
+
+#documents-list, #loading {
+    display: none;
+}
+
+.number {
+  border-radius: 50%;
+  text-align: center;
+  margin-top: -0.65rem;
+  background-color: white;
+  line-height: 2rem;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -1rem;
+  position: absolute;
+  top: 50%;
+}
+
+.number-blue {
+    border-color: #2086bf;
+    color: #2086bf;
+}
+
+.number-steel {
+    border-color: #647687;
+    background-color: white;
+    color: #647687;
+}
+
+.input-control.header-select select {
+    -webkit-appearance: menulist-button !important;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#categoriesline {
+    position: relative;
+    z-index: 1;
+}
+
+#categoriesline:before {
+  border-top: 2px solid #dfdfdf;
+  content: "";
+  margin: 0 auto;
+  /* this centers the line to the full width specified */
+  position: absolute;
+  /* positioning must be absolute here, and relative positioning must be applied to the parent */
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  z-index: -1;
+}
+
+.input-file-custom {
+    color: white;
+}
+
+.input-file-custom input {
+    filter: alpha(opacity=0);
+    opacity: 0;
+    position: absolute;
+    top: -7%;
+    left: -1%;
+}
+
+.noborder {
+    border: none;
+    background: inherit;
+}
+
+.hidden {
+    display: none;
+}
+
+.icon-home {
+    text-align: center;    
+}
+
+.icon-home p {
+    font-size: 2em;
+    color: white;
+}
+
+a {
+    color: inherit !important;
+}
+
+@media screen and (max-width: 767px) {
+    table {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        overflow-y: hidden !important;
+        -ms-overflow-style: -ms-autohiding-scrollbar !important;
+        border: 1px solid #ddd !important;
+    }
+
+    table > tbody > tr > .cell, table > thead > tr  >th {
+        width: initial !important;
+        
+    }
+    
+    table > tbody > tr > .cell {
+        margin-left: 10px !important;
+    }
+    
+    table > tbody > tr, table > thead > tr  {
+        width: initial !important;
+        
+    }   
+    
+    table > tbody > .cells4 > .cell {
+        width: 20% !important;
+    }
+}
