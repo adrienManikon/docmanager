@@ -47,6 +47,9 @@ class Category
      * @ORM\Column(name="main", type="boolean", options={"default": false}), nullable=true)
      */
     private $main;
+    
+    private $classe;
+    private $attribut;
 
     /**
      * Get id
@@ -153,4 +156,22 @@ class Category
     {
         return $this->main;
     }
+    
+    public function getClasse() {
+        return $this->classe;
+    }
+
+    public function getAttribut() {
+        return $this->attribut;
+    }
+
+    public function setClasse($classe) {
+        $this->classe = $classe;
+    }
+
+    public function setAttribut($attribut) {
+        $this->attribut = $attribut;
+    }
+
+
 }

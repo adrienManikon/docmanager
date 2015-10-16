@@ -134,11 +134,35 @@ class SearchController extends AbstractController {
         array_unshift($users, $noneUser);
         
         return array(
-            'maincategories' => $mainCategories,
+            'maincategories' => $this->buildCategoriesForView($mainCategories),
             'subcategories' => $subCategories,
-            'subsubcategories' => $subsubcategories,
+            'subsubcategories' => $this->buildCategoriesForView($subsubcategories),
             'users' => $users
         );
+        
+    }
+    
+    private function buildCategoriesForView($categories) {
+        
+        foreach ($categories as $category) {
+            
+            if ($category->getId() != null) {
+                
+                if ($category->getParent() != null) {
+                    $category->setClasse($category->getParent()->getName());
+                    $category->setAttribut("");
+                } else {
+                    $category->setClasse("");
+                }
+                $category->setAttribut("");
+            } else {
+                $category->setClasse("default-select");
+                $category->setAttribut("selected");                
+            }
+            
+        }
+        
+        return $categories;
         
     }
 }
