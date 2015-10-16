@@ -38,7 +38,7 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          "%kernel.debug%"
+    debug:          true
     use_controller: false
     bundles:        [ SWDocManagerBundle ]
     #java: /usr/bin/java
