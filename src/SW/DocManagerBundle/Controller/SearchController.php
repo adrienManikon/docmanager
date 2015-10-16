@@ -134,15 +134,15 @@ class SearchController extends AbstractController {
         array_unshift($users, $noneUser);
         
         return array(
-            'maincategories' => $this->buildCategoriesForView($mainCategories),
+            'maincategories' => $this->buildCategoriesForView($mainCategories, "", "checked"),
             'subcategories' => $subCategories,
-            'subsubcategories' => $this->buildCategoriesForView($subsubcategories),
+            'subsubcategories' => $this->buildCategoriesForView($subsubcategories, "default-select", "selected"),
             'users' => $users
         );
         
     }
     
-    private function buildCategoriesForView($categories) {
+    private function buildCategoriesForView($categories, $class, $attribut) {
         
         foreach ($categories as $category) {
             
@@ -156,8 +156,8 @@ class SearchController extends AbstractController {
                 }
                 $category->setAttribut("");
             } else {
-                $category->setClasse("default-select");
-                $category->setAttribut("selected");                
+                $category->setClasse($class);
+                $category->setAttribut($attribut);                
             }
             
         }
