@@ -24,73 +24,60 @@ class SearchController extends AbstractController {
     public function SearchAction(Request $request) {
         
         if (!$this->isMethodPost($request)) {
-            
-            $repoCat = $this->getRepository('SWDocManagerBundle:Category');
-            $repoUser = $this->getRepository('SWDocManagerBundle:User');
-            
-            $mainCategories = $repoCat->findByMain(true);
-            $subsubcategories = $repoCat->getSubSubCategories();
-            $subCategories = $repoCat->findBy(array(
-                'main' => false,
-                'parent' => null
-            ));
-            $users = $repoUser->findAll();
-            
-            $noneCategory = new Category();
-            $noneCategory->setName("Keine");
-            $noneCategory->setParent($noneCategory);
-            
-            $noneUser = new User();
-            $noneUser->setLastname("Keine");
                         
-            array_unshift($mainCategories, $noneCategory);
-            array_unshift($subsubcategories, $noneCategory);
-            array_unshift($users, $noneUser);
-            
-            return $this->render('SWDocManagerBundle:Search:search.html.twig', array(
-                'maincategories' => $mainCategories,
-                'subcategories' => $subCategories,
-                'subsubcategories' => $subsubcategories,
-                'users' => $users
-            ));
+            return $this->searchPage();
             
         } else {
             
-            $nameCode = $request->request->get("request");
-            $dateStart = $request->request->get("dateStart");
-            $dateEnd = $request->request->get("dateEnd");
-            $code = $this->buildCode(array($request->request->get("category"),
-                    $request->request->get("subcategory1"),
-                    $request->request->get("subcategory2"),
-                    $request->request->get("subcategory3")));
-            $initial = $request->request->get("creator");
-            $page = $request->request->get('page') != null ? $request->request->get('page') : 1;
-            
-            $repoDocument = $this->getRepository("SWDocManagerBundle:Document");
-            
-            if ($nameCode != null || $dateStart != null || $dateEnd != null || $code != null || $initial != null) {
-                $results = $repoDocument->search($nameCode,
-                        $dateStart,
-                        $dateEnd,
-                        $code,
-                        $initial,
-                        DocumentRepository::nbFirstResult($page));
-            } else {
-                $results = array('count' => 0, 'documents' => array());
-            }
-
-            $documentsJson = $this->encodeJson($results['documents']);
-            $nbPage = DocumentRepository::getNbPages($results['count']);
-            
-            return new JsonResponse(array(
-                'documents' => json_decode($documentsJson),
-                'pages' => $nbPage,
-                'pageCurrent' => $page
-        ));
+            return $this->getResults($request);            
             
         }
     }
     
+    private function searchPage() {
+        
+        $repoCat = $this->getRepository('SWDocManagerBundle:Category');
+        $repoUser = $this->getRepository('SWDocManagerBundle:User');
+
+        $mainCategories = $repoCat->findByMain(true);
+        $subsubcategories = $repoCat->getSubSubCategories();
+        $subCategories = $repoCat->findBy(array(
+            'main' => false,
+            'parent' => null
+        ));
+        $users = $repoUser->findAll();
+
+        return $this->render('SWDocManagerBundle:Search:search.html.twig',
+               $this->prepareDataForRender($mainCategories, $subCategories, $subsubcategories, $users));        
+    }
+
+    private function getResults(Request $request) {
+        
+        $filters = $this->getFilters($request);
+        $page = $request->request->get('page') != null ? $request->request->get('page') : 1;
+       
+        if ($this->hasFilters($filters)) {
+            $repoDocument = $this->getRepository("SWDocManagerBundle:Document");
+            $results = $repoDocument->search($filters['nameCode'],
+                    $filters['dateStart'],
+                    $filters['dateEnd'],
+                    $filters['code'],
+                    $filters['initial'],
+                    DocumentRepository::nbFirstResult($page));
+        } else {
+            $results = array('count' => 0, 'documents' => array());
+        }
+
+        $documentsJson = $this->encodeJson($results['documents']);
+        $nbPage = DocumentRepository::getNbPages($results['count']);
+
+        return new JsonResponse(array(
+            'documents' => json_decode($documentsJson),
+            'pages' => $nbPage,
+            'pageCurrent' => $page
+    ));        
+    }
+
     private function buildCode($codes) {
         
         $code = '';
@@ -102,5 +89,56 @@ class SearchController extends AbstractController {
         }
         
         return $code;
+    }
+    
+    private function getFilters(Request $request) {
+        
+        return array(            
+            "nameCode" => $request->request->get("request"),
+            "dateStart" => $request->request->get("dateStart"),
+            "dateEnd" => $request->request->get("dateEnd"),
+            "code" => $this->buildCode(array($request->request->get("category"),
+                $request->request->get("subcategory1"),
+                $request->request->get("subcategory2"),
+                $request->request->get("subcategory3"))),
+            "initial" => $request->request->get("creator"),            
+        );
+        
+    }
+    
+    private function hasFilters($filters) {
+                
+        foreach ($filters as $filter) {
+            
+            if ($filter != null)
+                return true;
+            
+        }
+        
+        return false;
+        
+        
+    }
+    
+    public function prepareDataForRender($mainCategories, $subCategories, $subsubcategories, $users) {
+        
+        $noneCategory = new Category();
+        $noneCategory->setName("Keine");
+        $noneCategory->setParent($noneCategory);
+
+        $noneUser = new User();
+        $noneUser->setLastname("Keine");
+        
+        array_unshift($mainCategories, $noneCategory);
+        array_unshift($subsubcategories, $noneCategory);
+        array_unshift($users, $noneUser);
+        
+        return array(
+            'maincategories' => $mainCategories,
+            'subcategories' => $subCategories,
+            'subsubcategories' => $subsubcategories,
+            'users' => $users
+        );
+        
     }
 }

@@ -24,35 +24,16 @@ class AddController extends AbstractController
 {
     
     public function categoryListAction($status = null, Request $request)
-    {                
-        $repository = $this->getRepository('SWDocManagerBundle:Category');
-        
+    {                        
         if ($this->isMethodPost($request) && $request->request->get("category") != null 
                     && $request->request->get("select1") != null
                     && $request->request->get("select2") != null
                     && $request->request->get("select3") != null) {
 
-            $document = new Document();
-            $subCategories = array();
-            
-            $category = $repository->find($request->request->get("category"));
-            $subCategories[] = $repository->find($request->request->get("select1"));
-            $subCategories[] = $repository->find($request->request->get("select2"));
-            $subCategories[] = $repository->find($request->request->get("select3"));
-            
-            $document->setDate(new DateTime('NOW'));
-            $document->setCategory($category);
-            $document->generateCode($subCategories);
-            $document->setSubCategories($this->array_unique_categories($subCategories));
-            $document->setDisabled(false);
-            
-            $this->saveObject($document);
-
-            return $this->redirect($this->generateUrl('sw_doc_manager_upload', array(
-                'id' => $document->getId()
-            )));
-            
+            return $this->goToUploadPage($request);            
         }
+        
+        $repository = $this->getRepository('SWDocManagerBundle:Category');
        
         $mainCategories = $repository->findByMain(true);
         $subsubcategories = $repository->getSubSubCategories();
@@ -60,7 +41,7 @@ class AddController extends AbstractController
             'main' => false,
             'parent' => null
         ));
-        
+                
         return $this->render('SWDocManagerBundle:Add:categorylist.html.twig', array(
             'status' => $status,
             'maincategories' => $mainCategories,
@@ -69,6 +50,31 @@ class AddController extends AbstractController
             ));
     }
     
+    protected function goToUploadPage(Request $request) {
+        
+        $repository = $this->getRepository('SWDocManagerBundle:Category');
+        $document = new Document();
+        $subCategories = array();
+
+        $category = $repository->find($request->request->get("category"));
+        $subCategories[] = $repository->find($request->request->get("select1"));
+        $subCategories[] = $repository->find($request->request->get("select2"));
+        $subCategories[] = $repository->find($request->request->get("select3"));
+
+        $document->setDate(new DateTime('NOW'));
+        $document->setCategory($category);
+        $document->generateCode($subCategories);
+        $document->setSubCategories($this->array_unique_categories($subCategories));
+        $document->setDisabled(false);
+
+        $this->saveObject($document);
+
+        return $this->redirect($this->generateUrl('sw_doc_manager_upload', array(
+            'id' => $document->getId()
+        )));
+    }
+
+
     protected function buildSubCategories($subsubcategories) {
         
         $subCategories = array();
@@ -85,37 +91,14 @@ class AddController extends AbstractController
     
     public function uploadViewAction(Request $request, Document $document)
     {       
-        $repositoryUploadSession = $this->getRepository("SWDocManagerBundle:UploadSession");
-                        
-        /* TEST */
-        $repositoryUser = $this->getRepository('SWDocManagerBundle:User');
-        
-        $user = $repositoryUser->findByLastname('Manikon')[0];
-        $document->setInitials($user->getInitial());
-        $document->setCreator($user);
-        $document->setNameAlreadyUsed(false);
-             
-        $uploadSession = $repositoryUploadSession->findOneByDocumentRef($document);
-        if ($uploadSession == null) {
-            $uploadSession = new UploadSession();
-            $uploadSession->getDocuments()->add($document);
-            $uploadSession->setDocumentRef($document);
-        }
-        
+                                
+        $uploadSession = $this->buildUploadSession($document);        
         $alreadyExists = false;
         $form = $this->createForm(new UploadSessionType(), $uploadSession);
         
         if ($form->handleRequest($request)->isValid()) {
             
-            if (!$uploadSession->hasExistedNames()) {
-                $uploadSession = $this->checkAvailabityNames($uploadSession);
-                //We keep files in cache
-                $this->uploadDocuments(true, $uploadSession);
-                $uploadSession->updateDocuments();                               
-            } else //User overrides
-                $uploadSession->setExistedNames(false);
-                        
-            $this->saveObject($uploadSession); 
+            $uploadSession = $this->updateUploadSession($uploadSession);
             
             if (!$uploadSession->hasExistedNames()) {
                 return $this->redirect($this->generateUrl('sw_doc_manager_recap', array(
@@ -132,7 +115,44 @@ class AddController extends AbstractController
             'alreadyExists' => $alreadyExists
         ));
     }
-            
+    
+    private function buildUploadSession(Document $document) {
+        
+        $repositoryUploadSession = $this->getRepository("SWDocManagerBundle:UploadSession");
+        $repositoryUser = $this->getRepository('SWDocManagerBundle:User');
+        
+        $user = $repositoryUser->findByLastname('Manikon')[0];
+        $document->setInitials($user->getInitial());
+        $document->setCreator($user);
+        $document->setNameAlreadyUsed(false);
+             
+        $uploadSession = $repositoryUploadSession->findOneByDocumentRef($document);
+        if ($uploadSession == null) {
+            $uploadSession = new UploadSession();
+            $uploadSession->getDocuments()->add($document);
+            $uploadSession->setDocumentRef($document);
+        }
+        
+        return $uploadSession;
+    }
+    
+    private function updateUploadSession(UploadSession $uploadSession) {
+        
+        if (!$uploadSession->hasExistedNames()) {
+            $uploadSession = $this->checkAvailabityNames($uploadSession);
+            //We keep files in cache
+            $this->uploadDocuments(true, $uploadSession);
+            $uploadSession->updateDocuments();                               
+        } else //User overrides
+            $uploadSession->setExistedNames(false);
+
+        $this->saveObject($uploadSession);        
+        
+        return $uploadSession;
+        
+    }
+
+
     public function recapAction(Request $request, UploadSession $uploadSession)
     {   
         

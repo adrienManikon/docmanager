@@ -22,18 +22,13 @@ class EditController extends AbstractController {
         
         $status = false;
         $message = "Something went wrong.";
-        $alreadyExists = false;
         $forceRequest = $force === "true";
         
         if ($this->isMethodPost($request)) {
             
             $message = "Invalid data.";
             
-            if ($request->request->get("id") != null
-                    && $request->request->get("code") != null
-                    && $request->request->get("name") != null
-                    && $request->request->get("date") != null
-                    && $request->request->get("creator") != null) {
+            if ($this->validRequest($request)) {
                 
                 $repDocument = $this->getRepository("SWDocManagerBundle:Document");
                 
@@ -48,36 +43,9 @@ class EditController extends AbstractController {
                 if ($document != null && $request->request->get("name") != '') {
 
                     $name = $request->request->get("name");
-                    $documentSameName = $repDocument->findOneByName($name);
                     
-                    if (!$forceRequest && $documentSameName != null) {
-                        
-                        if (!$forceRequest) {
-                            
-                            $status = false;
-                            $alreadyExists = true;
-                            $message = "This document already exists.";
-                            
-                        }else {
-                                                        
-                            $document = $this->renameFile($document, $name);
-                            $document->setName($name);
-                            $this->replaceDocument($documentSameName, $document);
-                            
-                            $status = true;
-                            $message = "";
-                            
-                        }
-                        
-                    } else {
+                    return $this->editDocument($name, $document, $forceRequest);
                     
-                        $document = $this->renameFile($document, $name);
-                        $document->setName($name);                                       
-                        $this->saveObject($document);
-
-                        $status = true;
-                        $message = "";
-                    }
                 }
                 
             }
@@ -85,8 +53,52 @@ class EditController extends AbstractController {
             
         }
         
+        return $this->returnJsonResponse($status, $message, false);
+        
+    }
+    
+    private function editDocument($name, $document, $forceRequest) {
+        
+        $repDocument = $this->getRepository("SWDocManagerBundle:Document");
+        $documentSameName = $repDocument->findOneByName($name);
+        $status = true;
+        $message = "";
+        $alreadyExists = false;
+
+        if (!$forceRequest && $documentSameName != null) {
+
+            if (!$forceRequest) {
+                $status = false;
+                $alreadyExists = true;
+                $message = "This document already exists.";
+            }else {
+                $document = $this->renameDocument($document, $name);
+                $this->replaceDocument($documentSameName, $document);
+            }
+
+        } else {
+
+            $document = $this->renameDocument($document, $name);
+            $this->saveObject($document);
+        }
+        
         return $this->returnJsonResponse($status, $message, $alreadyExists);
         
+    }
+    
+    private function validRequest(Request $request) {
+        return ($request->request->get("id") != null
+                    && $request->request->get("code") != null
+                    && $request->request->get("name") != null
+                    && $request->request->get("date") != null
+                    && $request->request->get("creator") != null);
+    }
+    
+    private function renameDocument($document, $name) {
+        $document = $this->renameFile($document, $name);
+        $document->setName($name);
+        
+        return $document;
     }
 
     private function returnJsonResponse($status, $message, $alreadyExists) {
