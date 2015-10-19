@@ -36,7 +36,7 @@ $(function(){
 function showList() {
     $.ajax({
         type: "POST",
-        url: "/web/app_dev.php/list",
+        url: $("#documents-list").attr('data-url'),
         dataType: "json",
         data: {
             'idcategories': idcategories
