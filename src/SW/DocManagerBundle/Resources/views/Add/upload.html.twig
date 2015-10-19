@@ -39,8 +39,8 @@
 
         <div id="inputBlock" data-prototype="{{ form_widget(form.documents.vars.prototype)|e }}">
             {% for document in form.documents %}
-                <div class="row cells12 fileInput">
-                    <div class="cell colspan2">
+                <div id="lineInput_1" class="row cells12 fileInput">
+                    <div class="cell colspan1">
                         <div class="input-control text full-size">
                         {{ form_widget(document.code, {'attr':{'readonly' :  'readonly'} }) }}
                         </div>
@@ -68,7 +68,7 @@
                         </div>                
                     </div>
                     <div class="cell colspan1">
-                        <div class="input-control full-size input-file-custom button full-size bg-gray fg-white'">
+                        <div class="input-control full-size input-file-custom button full-size bg-gray fg-white">
                             {% if alreadyExists == false %}
                                 Datei
                                 {{ form_widget(document.file, { 'attr':{'onchange':'changeInputFile(this)'} }) }}
@@ -77,7 +77,7 @@
                                 {{ form_widget(document.file,  { 'attr':{'disable':'disable', 'required': 'false'} }) }}
                             {% endif %}
                         </div>
-                    </div>
+                    </div>                     
                 </div>
             {% endfor %}
         </div>    

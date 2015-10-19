@@ -63,7 +63,7 @@ function addTagForm($collectionHolder) {
 
     var $newFormLi = $('<div></div>').append(newForm);
     
-    var newBlock =$('<div class="row cells12 fileInput"></div>');
+    var newBlock =$('<div id="lineInput_' + (index+1) + '" class="row cells12 fileInput"></div>');
     
     $('input', $newFormLi).each(function(index, element){
                 
@@ -73,12 +73,8 @@ function addTagForm($collectionHolder) {
         if (contains(name, 'category') || contains(name, 'creator') || contains(name, 'nameAlreadyUsed'))
             return;
         
-        if (contains(name, 'code') || contains(name, 'initials') || contains(name, 'date')) {
+        if (contains(name, 'initials') || contains(name, 'date')) {
             $block = $('<div class="cell colspan2"></div>').append($block);
-            if(contains(name, 'code')) {
-                $('input', $block).val($('#sw_docmanagerbundle_uploadsession_documents_0_code').val());
-                $('input', $block).attr("readonly","readonly");
-            }
             if(contains(name, 'initials')) {
                 $('input', $block).val("AM");
             }
@@ -87,9 +83,15 @@ function addTagForm($collectionHolder) {
             }
         } else if (contains(name, 'name')) {
             $block = $('<div class="cell colspan4"></div>').append($block);
-        } else if (contains(name, 'format')) {
-            $block = $('<div class="cell colspan1"></div>').append($block);  
-            $('input', $block).attr("class",'input-format');
+        } else if (contains(name, 'format') || contains(name, 'code')) {
+            $block = $('<div class="cell colspan1"></div>').append($block);
+            if(contains(name, 'code')) {
+                $('input', $block).val($('#sw_docmanagerbundle_uploadsession_documents_0_code').val());
+                $('input', $block).attr("readonly","readonly");
+            }            
+            if(contains(name, 'format')) {
+                $('input', $block).attr("class",'input-format');
+            }
         } else if (contains(name, 'file')) {
             $('input', $block).attr("onchange",'changeInputFile(this)');
             $block = $('<div class="input-control full-size input-file-custom button full-size bg-gray fg-white">Datei</div>').append(element);
@@ -102,12 +104,27 @@ function addTagForm($collectionHolder) {
         
     });
 
+    var $blockRemove = '<div class="cell colspan1 v-align-middle padding10">';
+    $blockRemove += '<button onclick="removeLine(lineInput_' + (index+1) + ')" class="removeInputButton button mini-button cycle-button">-</button>';
+    $blockRemove += '</div>';
+    newBlock.append($blockRemove);
     newBlock.hide();
     newBlock.appendTo($("#inputBlock")).show("slow");
+    
+    $("#sw_docmanagerbundle_uploadsession_weiter").prop(
+        'disabled', ($("#inputBlock").children().length < 1));
 }
 
 function contains(text, chartext) {
     
     return text.indexOf(chartext) > -1;
+    
+}
+
+function removeLine(id) {
+    
+    $(id).remove();
+    $("#sw_docmanagerbundle_uploadsession_weiter").prop(
+            'disabled', ($("#inputBlock").children().length < 1));
     
 }

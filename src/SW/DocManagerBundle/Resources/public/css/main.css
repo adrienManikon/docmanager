@@ -106,6 +106,10 @@ a {
     color: inherit !important;
 }
 
+button:disabled {
+    background-color: #555555 !important;
+}
+
 @media screen and (max-width: 767px) {
     table {
         width: 100% !important;
